@@ -1,0 +1,32 @@
+package com.example.coinbase.model
+
+data class Data(
+    val address_regex: String,
+    val asset_type: String,
+    val asset_type_description: Any,
+    val color: String,
+    val contract_address: String,
+    val description: String,
+    val destination_tag: Any,
+    val exponent: Int,
+    val features_info: Any,
+    val id: String,
+    val image_url: String,
+    val images: Any,
+    val links: Any,
+    val listed: Boolean,
+    val name: String,
+    val price_alerts_enabled: Boolean,
+    val recently_listed: Boolean,
+    val related_assets: List<String>,
+    val resource_urls: List<ResourceUrl>,
+    val slug: String,
+    val supported: Boolean,
+    val symbol: String,
+    val tradable_on_wallet: Boolean,
+    val transaction_unit_price_scale: Int,
+    val unit_price_scale: Int,
+    val uri_scheme: String,
+    val website: Any,
+    val white_paper: Any
+)

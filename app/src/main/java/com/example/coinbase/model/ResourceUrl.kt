@@ -1,7 +1,10 @@
 package com.example.coinbase.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ResourceUrl(
-    val icon_url: String,
+    @SerializedName("icon_url")
+    val iconUrl: String,
     val link: String,
     val title: String,
     val type: String

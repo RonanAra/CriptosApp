@@ -1,32 +1,50 @@
 package com.example.coinbase.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Data(
-    val address_regex: String,
-    val asset_type: String,
-    val asset_type_description: Any,
+    @SerializedName("address_regex")
+    val addressRegex: String,
+    @SerializedName("asset_type")
+    val assetType: String,
+    @SerializedName("asset_type_description")
+    val assetTypeDescription: Any,
     val color: String,
-    val contract_address: String,
+    @SerializedName("contract_address")
+    val contractAddress: String,
     val description: String,
-    val destination_tag: Any,
+    @SerializedName("destination_tag")
+    val destinationTag: Any,
     val exponent: Int,
-    val features_info: Any,
+    @SerializedName("features_info")
+    val featuresInfo: Any,
     val id: String,
-    val image_url: String,
+    @SerializedName("image_url")
+    val imageUrl: String,
     val images: Any,
     val links: Any,
     val listed: Boolean,
     val name: String,
-    val price_alerts_enabled: Boolean,
-    val recently_listed: Boolean,
+    @SerializedName("price_alerts_enabled")
+    val priceAlertsEnabled: Boolean,
+    @SerializedName("recently_listed")
+    val recentlyListed: Boolean,
+    @SerializedName("")
     val related_assets: List<String>,
-    val resource_urls: List<ResourceUrl>,
+    @SerializedName("resource_urls")
+    val resourceUrls: List<ResourceUrl>,
     val slug: String,
     val supported: Boolean,
     val symbol: String,
-    val tradable_on_wallet: Boolean,
-    val transaction_unit_price_scale: Int,
-    val unit_price_scale: Int,
-    val uri_scheme: String,
+    @SerializedName("tradable_on_wallet")
+    val tradableOnWallet: Boolean,
+    @SerializedName("transaction_unit_price_scale")
+    val transactionUnitPriceScale: Int,
+    @SerializedName("unit_price_scale")
+    val unitPriceScale: Int,
+    @SerializedName("uri_scheme")
+    val uriScheme: String,
     val website: Any,
-    val white_paper: Any
+    @SerializedName("white_paper")
+    val whitePaper: Any
 )

@@ -1,5 +1,6 @@
 package com.example.coinbase.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -33,11 +34,14 @@ class CoinAdapter(private val listaCriptos: List<Data>) :
             with(binding) {
 
                 tvTitle.text = criptos.name
+                tvCode.text = criptos.symbol
+
+                cvWatch.setBackgroundColor(Color.parseColor(criptos.color))
 
                 Glide
                     .with(itemView.context)
-                    .load(criptos.symbol)
-                    .into(ivSymbol)
+                    .load(criptos.imageUrl)
+                    .into(ivImage)
 
             }
         }

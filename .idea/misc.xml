@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/drawable/container.xml" value="0.2703125" />
+        <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/card_item.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/card_item.xml" value="0.176" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/fragment_home.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/watch_card_item.xml" value="0.25416666666666665" />
       </map>

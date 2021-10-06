@@ -35,8 +35,8 @@ class CoinAdapter(private val listaCriptos: List<Data>) :
 
                 tvTitle.text = criptos.name
                 tvCode.text = criptos.symbol
-
                 cvWatch.setBackgroundColor(Color.parseColor(criptos.color))
+
 
                 Glide
                     .with(itemView.context)

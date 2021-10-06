@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvWatch"
     style="@style/WatchCardDefault"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="150dp"
+    android:layout_height="160dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
         >
-
 
         <TextView
             android:id="@+id/tvTitle"
             style="@style/WatchCardTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvCode"
             app:layout_constraintEnd_toStartOf="@id/ivImage"
             tools:text="Title" />
 
@@ -29,20 +29,20 @@
             android:id="@+id/tvCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintEnd_toEndOf="@id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="Code"
             />
 
         <ImageView
             android:id="@+id/ivImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="12dp"
+            app:layout_constraintBottom_toTopOf="@id/tvTitle"
+            app:layout_constraintStart_toEndOf="@id/tvTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

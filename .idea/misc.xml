@@ -6,13 +6,13 @@
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/drawable/container.xml" value="0.2703125" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/card_item.xml" value="0.176" />
+        <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/card_item.xml" value="0.264" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/fragment_home.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/55119/AndroidStudioProjects/CoinBase/app/src/main/res/layout/watch_card_item.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

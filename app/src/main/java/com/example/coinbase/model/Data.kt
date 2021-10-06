@@ -1,28 +1,27 @@
 package com.example.coinbase.model
 
+import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Data(
     @SerializedName("address_regex")
     val addressRegex: String,
     @SerializedName("asset_type")
     val assetType: String,
     @SerializedName("asset_type_description")
-    val assetTypeDescription: Any,
+    val assetTypeDescription: String?,
     val color: String,
     @SerializedName("contract_address")
     val contractAddress: String,
     val description: String,
-    @SerializedName("destination_tag")
-    val destinationTag: Any,
     val exponent: Int,
-    @SerializedName("features_info")
-    val featuresInfo: Any,
     val id: String,
     @SerializedName("image_url")
     val imageUrl: String,
-    val images: Any,
-    val links: Any,
     val listed: Boolean,
     val name: String,
     @SerializedName("price_alerts_enabled")
@@ -44,7 +43,23 @@ data class Data(
     val unitPriceScale: Int,
     @SerializedName("uri_scheme")
     val uriScheme: String,
-    val website: Any,
+    val website: String,
     @SerializedName("white_paper")
-    val whitePaper: Any
-)
+    val whitePaper: String?
+) : Parcelable {
+
+        companion object{
+            var DIFF_CALBACK: DiffUtil.ItemCallback<Data> =
+                object  : DiffUtil.ItemCallback<Data>() {
+                    override fun areItemsTheSame(oldItem: Data, newItem: Data): Boolean {
+                            return oldItem.id == newItem.id
+                    }
+
+                    override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
+                            return oldItem.id == newItem.id
+                    }
+                }
+
+        }
+
+}

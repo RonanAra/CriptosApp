@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coinbase.R
 import com.example.coinbase.adapter.CoinAdapter
@@ -44,6 +46,8 @@ class HomeFragment : Fragment() {
             viewModel.getCoinBase()
 
             setupObservables()
+
+
         }
 
     }
@@ -59,17 +63,16 @@ class HomeFragment : Fragment() {
                     binding?.let {
                         with(it) {
                             rvCoinBase.apply {
-                                layoutManager = LinearLayoutManager(this.context)
+                                layoutManager = GridLayoutManager(context,2)
                                 adapter = coinAdapter
+
                             }
                         }
                     }
-                }
 
+                }
             })
         }
-
-
     }
 
     override fun onDestroyView() {

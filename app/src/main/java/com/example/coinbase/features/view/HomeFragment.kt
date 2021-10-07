@@ -1,5 +1,7 @@
 package com.example.coinbase.features.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import com.example.coinbase.R
 import com.example.coinbase.adapter.CoinAdapter
 import com.example.coinbase.databinding.FragmentHomeBinding
 import com.example.coinbase.features.viewmodel.HomeViewModel
+import com.example.coinbase.model.Data
 
 
 class HomeFragment : Fragment() {
@@ -58,7 +61,10 @@ class HomeFragment : Fragment() {
                 it?.let {
                     val coinAdapter = CoinAdapter(
                         listaCriptos = it
-                    )
+
+                    ){ clicked ->
+                        openLink(clicked.website)
+                    }
 
                     binding?.let {
                         with(it) {
@@ -73,6 +79,11 @@ class HomeFragment : Fragment() {
                 }
             })
         }
+    }
+
+    private fun openLink(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW,Uri.parse(url))
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

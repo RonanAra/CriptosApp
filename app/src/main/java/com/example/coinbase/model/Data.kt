@@ -2,10 +2,13 @@ package com.example.coinbase.model
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-
+@Entity
 @Parcelize
 data class Data(
     @SerializedName("address_regex")
@@ -19,21 +22,21 @@ data class Data(
     val contractAddress: String,
     val description: String,
     val exponent: Int,
+    @PrimaryKey
     val id: String,
+    @ColumnInfo(name = "image_url")
     @SerializedName("image_url")
     val imageUrl: String,
     val listed: Boolean,
+    @ColumnInfo(name = "name")
     val name: String,
     @SerializedName("price_alerts_enabled")
     val priceAlertsEnabled: Boolean,
     @SerializedName("recently_listed")
     val recentlyListed: Boolean,
-    @SerializedName("")
-    val related_assets: List<String>,
-    @SerializedName("resource_urls")
-    val resourceUrls: List<ResourceUrl>,
     val slug: String,
     val supported: Boolean,
+    @ColumnInfo(name = "symbol")
     val symbol: String,
     @SerializedName("tradable_on_wallet")
     val tradableOnWallet: Boolean,

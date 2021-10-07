@@ -8,7 +8,11 @@ import com.bumptech.glide.Glide
 import com.example.coinbase.databinding.CardItemBinding
 import com.example.coinbase.model.Data
 
-class CoinAdapter(private val listaCriptos: List<Data>) :
+class CoinAdapter(
+    private val listaCriptos: List<Data>,
+    private val onItemClicked: (Data) -> Unit
+
+) :
     RecyclerView.Adapter<CoinAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,7 +25,7 @@ class CoinAdapter(private val listaCriptos: List<Data>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listaCriptos[position])
+        holder.bind(listaCriptos[position], onItemClicked)
     }
 
     override fun getItemCount(): Int = listaCriptos.size
@@ -30,24 +34,25 @@ class CoinAdapter(private val listaCriptos: List<Data>) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(criptos: Data) {
+        fun bind(criptos: Data, onItemClicked: (Data) -> Unit) {
             with(binding) {
 
                 tvTitle.text = criptos.name
                 tvCode.text = criptos.symbol
                 cvWatch.setBackgroundColor(Color.parseColor(criptos.color))
 
-
                 Glide
                     .with(itemView.context)
                     .load(criptos.imageUrl)
                     .into(ivImage)
 
+                cvWatch.setOnClickListener {
+                    onItemClicked(criptos)
+                }
             }
         }
     }
 }
-
 
 
 

@@ -14,22 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="WatchCardDefault">
-        <item name="cardBackgroundColor">@color/lighter_gray</item>
-        <item name="android:layout_marginEnd">@dimen/margin_default</item>
-        <item name="android:layout_marginStart">@dimen/margin_default</item>
-        <item name="android:layout_marginBottom">@dimen/margin_half</item>
-        <item name="android:layout_marginTop">@dimen/margin_half</item>
-        <item name="contentPaddingTop">0dp</item>
-        <item name="cardElevation">@dimen/watch_card_elevation</item>
-    </style>
 
-    <style name="WatchCardTitle">
-        <item name="android:layout_marginStart">@dimen/margin_default</item>
-        <item name="android:layout_marginEnd">@dimen/margin_default</item>
-        <item name="android:layout_marginTop">@dimen/margin_quarter</item>
-        <item name="android:textColor">@color/secondary_blue</item>
-        <item name="android:textSize">@dimen/title_size</item>
-    </style>
+
 
 </resources>

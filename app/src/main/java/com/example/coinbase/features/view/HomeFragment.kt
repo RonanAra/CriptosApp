@@ -7,16 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.coinbase.R
-import com.example.coinbase.adapter.CoinAdapter
 import com.example.coinbase.databinding.FragmentHomeBinding
 import com.example.coinbase.features.viewmodel.HomeViewModel
-import com.example.coinbase.model.Data
 
 
 class HomeFragment : Fragment() {

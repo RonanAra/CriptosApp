@@ -1,4 +1,4 @@
-package com.example.coinbase.adapter
+package com.example.coinbase.features.view
 
 import android.graphics.Color
 import android.view.LayoutInflater

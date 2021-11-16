@@ -13,7 +13,7 @@
 
 <h3>Próximas implementações</h3>
 <li>Paging 3</li>
-<li>Room</h1>
+<li>Room</li>
 <li>Testes unitários (Mockito)</li>
 
 

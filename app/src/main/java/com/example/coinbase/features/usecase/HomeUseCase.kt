@@ -1,15 +1,15 @@
 package com.example.coinbase.features.usecase
 
-import com.example.coinbase.features.repository.HomeRepository
+import com.example.coinbase.api.Repository
 import com.example.coinbase.model.Criptos
 import com.example.coinbase.utils.ResponseApi
 
-class HomeUseCase {
-
-    private val homeRepository = HomeRepository()
+class HomeUseCase(
+    private val repository: Repository
+) {
 
     suspend fun getCoinBase(): ResponseApi {
-        return when (val responseApi = homeRepository.getCoinBase()) {
+        return when (val responseApi = repository.getCoinBase()) {
             is ResponseApi.Success -> {
                 var data = responseApi.data as? Criptos
                 val result = data?.data?.map {

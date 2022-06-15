@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".features.view.HomeFragment">
 
-
     <TextView
         android:id="@+id/tvExplore"
         android:layout_width="wrap_content"
@@ -34,6 +33,14 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCoinBase"
         android:layout_width="match_parent"
@@ -45,5 +52,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/card_item"
          />
+
 
 </LinearLayout>

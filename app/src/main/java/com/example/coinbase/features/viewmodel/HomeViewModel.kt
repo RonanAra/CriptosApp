@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinbase.base.BaseViewModel
+import com.example.coinbase.api.Repository
 import com.example.coinbase.features.usecase.HomeUseCase
 import com.example.coinbase.model.Data
 import com.example.coinbase.utils.ResponseApi
@@ -12,28 +12,33 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val homeUseCase: HomeUseCase
-) : BaseViewModel() {
-
-
+) : ViewModel() {
 
     private val _onSuccesCoin: MutableLiveData<List<Data>> = MutableLiveData()
 
     val onSuccessCoin: LiveData<List<Data>>
         get() = _onSuccesCoin
 
+    private val _onErrorCoin: MutableLiveData<Boolean> = MutableLiveData()
+
+    val onErrorCoin: LiveData<Boolean>
+        get() = _onErrorCoin
 
     fun getCoinBase() {
         viewModelScope.launch {
-            callApi(
-                suspend { homeUseCase.getCoinBase() },
-                onSuccess = {
-                    val result = it as? List<*>
+            when (val responseApi = homeUseCase.getCoinBase()) {
+                is ResponseApi.Success -> {
+                    val result = responseApi.data as? List<*>
                     _onSuccesCoin.postValue(
                         result?.filterIsInstance<Data>()
                     )
-                })
+                }
+                is ResponseApi.Error -> {
+                    _onErrorCoin.postValue(true)
+                }
             }
         }
     }
+}
 
 

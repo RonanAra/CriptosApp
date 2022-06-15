@@ -11,7 +11,7 @@ class HomeUseCase(
     suspend fun getCoinBase(): ResponseApi {
         return when (val responseApi = repository.getCoinBase()) {
             is ResponseApi.Success -> {
-                var data = responseApi.data as? Criptos
+                val data = responseApi.data as? Criptos
                 val result = data?.data?.map {
                     it
                 }

@@ -29,22 +29,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onClicked(assetClicked: Data?) {
-        assetClicked?.website?.let {
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
-            )
-        } ?: run {
-            binding?.rvCoinBase?.let {
-                Snackbar.make(
-                    it,
-                    "This asset haven't a website",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +48,22 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
     }
 
+    private fun onClicked(assetClicked: Data?) {
+        assetClicked?.website?.let {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+            )
+        } ?: run {
+            binding?.rvCoinBase?.let {
+                Snackbar.make(
+                    it,
+                    "This asset haven't a website",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
     private fun setupRecyclerView() {
         binding?.rvCoinBase?.apply {
             layoutManager = GridLayoutManager(context, 2)
@@ -71,19 +71,16 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun setupObservables() {
         viewModel.onSuccessCoin.observe(viewLifecycleOwner) {
             it?.let {
                 coinAdapter.submitList(it)
             }
         }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
-
 }

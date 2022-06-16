@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".features.view.HomeFragment">
+    tools:context=".features.home.view.HomeFragment">
 
     <TextView
         android:id="@+id/tvExplore"

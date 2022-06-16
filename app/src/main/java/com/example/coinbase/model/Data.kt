@@ -1,8 +1,11 @@
 package com.example.coinbase.model
 
+import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Data(
     @SerializedName("address_regex")
     val addressRegex: String,
@@ -38,4 +41,18 @@ data class Data(
     val website: String,
     @SerializedName("white_paper")
     val whitePaper: String?
-)
+) : Parcelable  {
+
+    companion object {
+        var DIFF_CALLBACK: DiffUtil.ItemCallback<Data> =
+            object : DiffUtil.ItemCallback<Data>() {
+                override fun areItemsTheSame(oldItem: Data, newItem: Data): Boolean {
+                    return oldItem.id == newItem.id
+                }
+
+                override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
+                    return oldItem.id == newItem.id
+                }
+            }
+    }
+}

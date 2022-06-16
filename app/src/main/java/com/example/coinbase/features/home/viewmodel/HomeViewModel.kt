@@ -1,11 +1,10 @@
-package com.example.coinbase.features.viewmodel
+package com.example.coinbase.features.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinbase.api.Repository
-import com.example.coinbase.features.usecase.HomeUseCase
+import com.example.coinbase.features.home.usecase.HomeUseCase
 import com.example.coinbase.model.Data
 import com.example.coinbase.utils.ResponseApi
 import kotlinx.coroutines.launch

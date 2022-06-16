@@ -1,19 +1,17 @@
-package com.example.coinbase.features.view
+package com.example.coinbase.features.home.view
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinbase.databinding.CardItemBinding
 import com.example.coinbase.model.Data
 
 class CoinAdapter(
-    private val listaCriptos: List<Data>,
-    private val onItemClicked: (Data) -> Unit
-
-) :
-    RecyclerView.Adapter<CoinAdapter.ViewHolder>() {
+    private val onItemClicked: (Data?) -> Unit
+) : ListAdapter<Data, CoinAdapter.ViewHolder>(Data.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardItemBinding.inflate(
@@ -25,28 +23,27 @@ class CoinAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listaCriptos[position], onItemClicked)
+        holder.bind(getItem(position), onItemClicked)
     }
 
-    override fun getItemCount(): Int = listaCriptos.size
 
     class ViewHolder(val binding: CardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(criptos: Data, onItemClicked: (Data) -> Unit) {
+        fun bind(criptos: Data?, onItemClicked: (Data?) -> Unit) {
             with(binding) {
 
-                tvTitle.text = criptos.name
-                tvCode.text = criptos.symbol
-                cvWatch.setBackgroundColor(Color.parseColor(criptos.color))
+                tvTitle.text = criptos?.name
+                tvCode.text = criptos?.symbol
+                cvWatch.setBackgroundColor(Color.parseColor(criptos?.color))
 
                 Glide
                     .with(itemView.context)
-                    .load(criptos.imageUrl)
+                    .load(criptos?.imageUrl)
                     .into(ivImage)
 
-                cvWatch.setOnClickListener {
+                cardItem.setOnClickListener {
                     onItemClicked(criptos)
                 }
             }

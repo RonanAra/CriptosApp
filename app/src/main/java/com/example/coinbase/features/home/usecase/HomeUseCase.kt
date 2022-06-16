@@ -1,4 +1,4 @@
-package com.example.coinbase.features.usecase
+package com.example.coinbase.features.home.usecase
 
 import com.example.coinbase.api.Repository
 import com.example.coinbase.model.Criptos

@@ -1,4 +1,4 @@
-package com.example.coinbase.features.home.view
+package com.example.coinbase.features.home
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinbase.databinding.CardItemBinding
 import com.example.coinbase.model.Data
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 class CoinAdapter(
-    private val onItemClicked: (Data?) -> Unit,
+    private val onItemClicked: (Data?) -> Unit
 ) : ListAdapter<Data, CoinAdapter.ViewHolder>(Data.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +28,7 @@ class CoinAdapter(
         holder.bind(getItem(position), onItemClicked)
     }
 
-    class ViewHolder(val binding: CardItemBinding) :
+    class ViewHolder(private val binding: CardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(criptos: Data?, onItemClicked: (Data?) -> Unit) {

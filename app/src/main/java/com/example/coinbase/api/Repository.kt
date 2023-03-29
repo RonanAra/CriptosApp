@@ -1,13 +1,17 @@
 package com.example.coinbase.api
 
-import com.example.coinbase.base.BaseRepository
-import com.example.coinbase.utils.ResponseApi
+import com.example.coinbase.model.Data
+import javax.inject.Inject
 
-class Repository : BaseRepository() {
+interface HomeRepository {
+    suspend fun getCoins(): List<Data>
+}
 
-    suspend fun getCoinBase(): ResponseApi {
-        return safeApiCall {
-            ApiService.coinApi.getCoin()
-        }
+class HomeRepositoryImpl @Inject constructor(
+    private val service: CoinApi
+): HomeRepository {
+
+    override suspend fun getCoins(): List<Data> {
+        return service.getCoinsList().data
     }
 }

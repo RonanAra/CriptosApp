@@ -12,7 +12,9 @@ import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.example.coinbase.databinding.FragmentDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private var binding: FragmentDetailBinding? = null
@@ -36,12 +38,10 @@ class DetailFragment : Fragment() {
         webView?.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                binding?.pdDetailLoading?.isVisible = false
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                binding?.pdDetailLoading?.isVisible = true
             }
         }
         webView?.loadUrl(args.url.toString())

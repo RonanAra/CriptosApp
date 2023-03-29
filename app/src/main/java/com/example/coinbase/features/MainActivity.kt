@@ -3,8 +3,9 @@ package com.example.coinbase.features
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.coinbase.R
-import com.example.coinbase.features.home.view.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

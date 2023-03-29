@@ -25,4 +25,9 @@ class HomeViewModel @Inject constructor(
            _listCoins.value = repository.getCoins()
         }
     }
+    fun filterList(text: String) {
+        viewModelScope.launch {
+            _listCoins.value = repository.filterList(text)
+        }
+    }
 }

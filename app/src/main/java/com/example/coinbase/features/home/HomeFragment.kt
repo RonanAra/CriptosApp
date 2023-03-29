@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,13 @@ class HomeFragment : Fragment() {
         viewModel.getCoinBase()
         setObservers()
         setupRecyclerView()
+        setListeners()
+    }
+
+    private fun setListeners() = binding.run {
+        search.editText?.doAfterTextChanged {
+            viewModel.filterList(it.toString())
+        }
     }
 
     private fun onClicked(assetClicked: Data?) {

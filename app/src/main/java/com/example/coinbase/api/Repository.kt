@@ -5,6 +5,7 @@ import javax.inject.Inject
 
 interface HomeRepository {
     suspend fun getCoins(): List<Data>
+    suspend fun filterList(text: String): List<Data>
 }
 
 class HomeRepositoryImpl @Inject constructor(
@@ -13,5 +14,12 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun getCoins(): List<Data> {
         return service.getCoinsList().data
+    }
+
+    override suspend fun filterList(text: String): List<Data> {
+        val filteredList = service.getCoinsList().data.filter {
+            it.name.contains(text.lowercase())
+        }
+        return filteredList
     }
 }

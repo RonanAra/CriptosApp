@@ -10,7 +10,7 @@ import com.example.coinbase.databinding.CardItemBinding
 import com.example.coinbase.model.Data
 
 class CoinAdapter(
-    private val onItemClicked: (Data?) -> Unit
+    private val onItemClicked: (Data?) -> Unit,
 ) : ListAdapter<Data, CoinAdapter.ViewHolder>(Data.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,10 +26,8 @@ class CoinAdapter(
         holder.bind(getItem(position), onItemClicked)
     }
 
-
     class ViewHolder(val binding: CardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
 
         fun bind(criptos: Data?, onItemClicked: (Data?) -> Unit) {
             with(binding) {
@@ -50,10 +48,3 @@ class CoinAdapter(
         }
     }
 }
-
-
-
-
-
-
-

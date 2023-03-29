@@ -1,8 +1,5 @@
-package com.example.coinbase
+package com.example.coinbase.api
 
-
-
-import com.example.coinbase.api.CoinApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,5 +13,4 @@ object ApiService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
 }

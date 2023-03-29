@@ -7,7 +7,6 @@ import com.example.coinbase.utils.ResponseApi
 class HomeUseCase(
     private val repository: Repository
 ) {
-
     suspend fun getCoinBase(): ResponseApi {
         return when (val responseApi = repository.getCoinBase()) {
             is ResponseApi.Success -> {

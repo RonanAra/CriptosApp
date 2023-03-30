@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.coinbase.databinding.FragmentHomeBinding
 import com.example.coinbase.model.Data
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -47,7 +46,7 @@ class HomeFragment : Fragment() {
 
     private fun setListeners() = binding.run {
         search.editText?.doAfterTextChanged {
-            viewModel.filterList(it.toString())
+            viewModel.filterList(it.toString().lowercase())
         }
     }
 
@@ -63,6 +62,7 @@ class HomeFragment : Fragment() {
         binding.rvCoinBase.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = coinAdapter
+            setHasFixedSize(true)
         }
     }
 

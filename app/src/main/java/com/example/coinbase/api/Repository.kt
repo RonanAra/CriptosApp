@@ -18,7 +18,7 @@ class HomeRepositoryImpl @Inject constructor(
 
     override suspend fun filterList(text: String): List<Data> {
         val filteredList = service.getCoinsList().data.filter {
-            it.name.contains(text.lowercase())
+            it.name.lowercase().contains(text)
         }
         return filteredList
     }

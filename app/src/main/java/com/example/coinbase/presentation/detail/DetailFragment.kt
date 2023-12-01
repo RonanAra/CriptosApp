@@ -1,4 +1,4 @@
-package com.example.coinbase.presentation.detail.view
+package com.example.coinbase.presentation.detail
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -18,7 +18,7 @@ class DetailFragment : Fragment() {
 
     private var binding: FragmentDetailBinding? = null
     private var webView: WebView? = null
-    private val args: DetailFragmentArgs by navArgs()
+    private val args: com.example.coinbase.presentation.detail.view.DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

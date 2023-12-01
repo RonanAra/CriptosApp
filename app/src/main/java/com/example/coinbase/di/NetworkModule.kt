@@ -1,7 +1,7 @@
 package com.example.coinbase.di
 
 import androidx.viewbinding.BuildConfig
-import com.example.coinbase.data.service.CoinApi
+import com.example.coinbase.data.service.CoinService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,12 +49,12 @@ object NetworkModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: GsonConverterFactory,
-    ): CoinApi {
+    ): CoinService {
         return Retrofit.Builder()
             .baseUrl("https://api.coinbase.com/v2/")
             .client(okHttpClient)
             .addConverterFactory(converterFactory)
             .build()
-            .create(CoinApi::class.java)
+            .create(CoinService::class.java)
     }
 }

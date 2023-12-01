@@ -1,4 +1,4 @@
-package com.example.coinbase.features.home
+package com.example.coinbase.presentation.features.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.coinbase.databinding.FragmentHomeBinding
-import com.example.coinbase.model.Data
+import com.example.coinbase.data.model.Data
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

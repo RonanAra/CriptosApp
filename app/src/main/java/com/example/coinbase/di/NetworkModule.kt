@@ -1,7 +1,7 @@
 package com.example.coinbase.di
 
 import androidx.viewbinding.BuildConfig
-import com.example.coinbase.api.CoinApi
+import com.example.coinbase.data.api.CoinApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

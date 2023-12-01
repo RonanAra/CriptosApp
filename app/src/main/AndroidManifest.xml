@@ -13,7 +13,7 @@
         android:name=".CoinApplication"
         android:theme="@style/Theme.CoinBase">
         <activity
-            android:name=".features.MainActivity"
+            android:name=".presentation.features.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

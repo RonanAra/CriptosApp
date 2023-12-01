@@ -1,4 +1,4 @@
-package com.example.coinbase.features.detail.view
+package com.example.coinbase.presentation.features.detail.view
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap

@@ -1,6 +1,6 @@
-package com.example.coinbase.api
+package com.example.coinbase.data.api
 
-import com.example.coinbase.model.Data
+import com.example.coinbase.data.model.Data
 import javax.inject.Inject
 
 interface HomeRepository {

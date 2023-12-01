@@ -1,6 +1,6 @@
-package com.example.coinbase.api
+package com.example.coinbase.data.api
 
-import com.example.coinbase.model.Criptos
+import com.example.coinbase.data.model.Criptos
 import retrofit2.http.*
 
 interface CoinApi {

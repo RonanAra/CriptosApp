@@ -1,4 +1,4 @@
-package com.example.coinbase.features
+package com.example.coinbase.presentation.features
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

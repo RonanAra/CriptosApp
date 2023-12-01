@@ -1,7 +1,7 @@
 package com.example.coinbase.di
 
-import com.example.coinbase.api.HomeRepository
-import com.example.coinbase.api.HomeRepositoryImpl
+import com.example.coinbase.data.api.HomeRepository
+import com.example.coinbase.data.api.HomeRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

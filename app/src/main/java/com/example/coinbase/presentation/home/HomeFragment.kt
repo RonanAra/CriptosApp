@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.coinbase.databinding.FragmentHomeBinding
-import com.example.coinbase.data.models.response.Data
+import com.example.coinbase.data.models.response.CoinResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onClicked(assetClicked: Data?) {
+    private fun onClicked(assetClicked: CoinResponse?) {
         assetClicked?.website?.let { url ->
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToDetailFragment(url)

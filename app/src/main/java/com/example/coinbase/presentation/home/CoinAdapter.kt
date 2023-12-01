@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinbase.databinding.CardItemBinding
-import com.example.coinbase.data.models.response.Data
+import com.example.coinbase.data.models.response.CoinResponse
 
 class CoinAdapter(
-    private val onItemClicked: (Data?) -> Unit
-) : ListAdapter<Data, CoinAdapter.ViewHolder>(Data.DIFF_CALLBACK) {
+    private val onItemClicked: (CoinResponse?) -> Unit
+) : ListAdapter<CoinResponse, CoinAdapter.ViewHolder>(CoinResponse.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardItemBinding.inflate(
@@ -29,20 +29,23 @@ class CoinAdapter(
     class ViewHolder(private val binding: CardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(criptos: Data?, onItemClicked: (Data?) -> Unit) {
+        fun bind(
+            coin: CoinResponse?,
+            onItemClicked: (CoinResponse?) -> Unit
+        ) {
             with(binding) {
 
-                tvTitle.text = criptos?.name
-                tvCode.text = criptos?.symbol
-                cvWatch.setBackgroundColor(Color.parseColor(criptos?.color))
+                tvTitle.text = coin?.name
+                tvCode.text = coin?.symbol
+                cvWatch.setBackgroundColor(Color.parseColor(coin?.color))
 
                 Glide
                     .with(itemView.context)
-                    .load(criptos?.imageUrl)
+                    .load(coin?.imageUrl)
                     .into(ivImage)
 
                 cardItem.setOnClickListener {
-                    onItemClicked(criptos)
+                    onItemClicked(coin)
                 }
             }
         }

@@ -18,7 +18,7 @@ class DetailFragment : Fragment() {
 
     private var binding: FragmentDetailBinding? = null
     private var webView: WebView? = null
-    private val args: com.example.coinbase.presentation.detail.view.DetailFragmentArgs by navArgs()
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

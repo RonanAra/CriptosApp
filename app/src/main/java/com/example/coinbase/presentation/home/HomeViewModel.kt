@@ -1,11 +1,11 @@
-package com.example.coinbase.presentation.features.home
+package com.example.coinbase.presentation.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinbase.data.api.HomeRepository
-import com.example.coinbase.data.model.Data
+import com.example.coinbase.data.models.response.Data
+import com.example.coinbase.domain.repository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

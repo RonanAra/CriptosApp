@@ -1,4 +1,4 @@
-package com.example.coinbase.data.model
+package com.example.coinbase.data.models.response
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil

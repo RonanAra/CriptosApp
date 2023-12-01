@@ -1,12 +1,9 @@
-package com.example.coinbase.data.api
+package com.example.coinbase.data.repository
 
-import com.example.coinbase.data.model.Data
+import com.example.coinbase.data.models.response.Data
+import com.example.coinbase.data.service.CoinApi
+import com.example.coinbase.domain.repository.HomeRepository
 import javax.inject.Inject
-
-interface HomeRepository {
-    suspend fun getCoins(): List<Data>
-    suspend fun filterList(text: String): List<Data>
-}
 
 class HomeRepositoryImpl @Inject constructor(
     private val service: CoinApi

@@ -1,4 +1,4 @@
-package com.example.coinbase.presentation.features.detail.view
+package com.example.coinbase.presentation.detail.view
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.example.coinbase.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint

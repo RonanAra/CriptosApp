@@ -1,4 +1,4 @@
-package com.example.coinbase.presentation.features.home
+package com.example.coinbase.presentation.home
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coinbase.databinding.CardItemBinding
-import com.example.coinbase.data.model.Data
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.example.coinbase.data.models.response.Data
 
 class CoinAdapter(
     private val onItemClicked: (Data?) -> Unit

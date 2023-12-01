@@ -16,18 +16,21 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _listCoins: MutableLiveData<List<Data>> = MutableLiveData()
+    val listCoins: LiveData<List<Data>> get() = _listCoins
 
-    val listCoins: LiveData<List<Data>>
-        get() = _listCoins
+    private var coins: List<Data> = listOf()
 
     fun getCoinBase() {
         viewModelScope.launch {
-           _listCoins.value = repository.getCoins()
+            val coinsResponse = repository.getCoins()
+           _listCoins.value = coinsResponse
+            coins = coinsResponse
         }
     }
     fun filterList(text: String) {
-        viewModelScope.launch {
-            _listCoins.value = repository.filterList(text)
-        }
+       val coinsFiltered = coins.filter {
+           it.name.lowercase().contains(text.lowercase())
+       }
+        _listCoins.value = coinsFiltered
     }
 }

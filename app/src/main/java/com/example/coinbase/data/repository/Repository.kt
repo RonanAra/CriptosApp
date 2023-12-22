@@ -10,6 +10,6 @@ class HomeRepositoryImpl @Inject constructor(
 ): HomeRepository {
 
     override suspend fun getCoins(): List<CoinResponse> {
-        return service.getCoinsList().list
+        return service.getCoinsList().data
     }
 }

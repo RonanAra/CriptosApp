@@ -26,27 +26,39 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(
-            inflater, container, false
+            inflater,
+            container,
+            false
         )
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getCoinBase()
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+        super.onViewCreated(
+            view,
+            savedInstanceState
+        )
         setObservers()
         setupRecyclerView()
         setListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCoins()
+    }
+
     private fun setListeners() = binding.run {
         search.editText?.doAfterTextChanged {
-            viewModel.filterList(it.toString().lowercase())
+            viewModel.filterList(it.toString())
         }
     }
 
@@ -62,7 +74,6 @@ class HomeFragment : Fragment() {
         binding.rvCoinBase.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = coinAdapter
-            setHasFixedSize(true)
         }
     }
 

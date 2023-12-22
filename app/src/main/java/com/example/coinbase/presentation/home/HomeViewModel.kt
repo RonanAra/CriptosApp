@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
 
     private var coins: List<CoinResponse> = listOf()
 
-    fun getCoinBase() {
+    fun getCoins() {
         viewModelScope.launch {
             val coinsResponse = repository.getCoins()
            _listCoins.value = coinsResponse

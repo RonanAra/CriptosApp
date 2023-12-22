@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.coinbase.databinding.FragmentHomeBinding
 import com.example.coinbase.data.models.response.CoinResponse
+import com.example.coinbase.presentation.home.adapter.CoinAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

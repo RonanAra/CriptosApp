@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.coinbase.base.BaseViewModel
 import com.example.coinbase.data.models.response.CoinResponse
 import com.example.coinbase.domain.repository.HomeRepository
-import com.example.coinbase.presentation.home.adapter.HomeIntent
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.coinbase.databinding.FragmentHomeBinding
 import com.example.coinbase.data.models.response.CoinResponse
 import com.example.coinbase.presentation.home.adapter.CoinAdapter
-import com.example.coinbase.presentation.home.adapter.HomeIntent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

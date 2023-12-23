@@ -1,36 +1,47 @@
 package com.example.coinbase.presentation.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.coinbase.base.BaseViewModel
 import com.example.coinbase.data.models.response.CoinResponse
 import com.example.coinbase.domain.repository.HomeRepository
+import com.example.coinbase.presentation.home.adapter.HomeIntent
+import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository
-) : ViewModel() {
-
-    private val _listCoins: MutableLiveData<List<CoinResponse>> = MutableLiveData()
-    val listCoins: LiveData<List<CoinResponse>> get() = _listCoins
-
+) : BaseViewModel<HomeIntent, HomeState>() {
     private var coins: List<CoinResponse> = listOf()
 
-    fun getCoins() {
-        viewModelScope.launch {
-            val coinsResponse = repository.getCoins()
-           _listCoins.value = coinsResponse
-            coins = coinsResponse
+    override fun handleIntent(intent: HomeIntent) {
+        when(intent) {
+            is HomeIntent.LoadCoins -> getCoins()
+            is HomeIntent.FilterList -> filterList(intent.name)
         }
     }
-    fun filterList(text: String) {
-       val coinsFiltered = coins.filter {
-           it.name.lowercase().contains(text.lowercase())
-       }
-        _listCoins.value = coinsFiltered
+
+    private fun getCoins() {
+        viewModelScope.launchSuspendFun(
+            blockToRun = { repository.getCoins() },
+            onLoading = { loading ->
+               _state.value = HomeState.Loading(loading)
+            },
+            onSuccess = { response ->
+                _state.value = HomeState.LoadCoins(response)
+                coins = response
+            },
+            onError = {
+                _state.value = HomeState.Error(it.message.orEmpty())
+            }
+        )
+    }
+
+    private fun filterList(text: String) {
+        val coinsFiltered = coins.filter {
+            it.name.lowercase().contains(text.lowercase())
+        }
+       _state.value = HomeState.LoadCoins(coinsFiltered)
     }
 }

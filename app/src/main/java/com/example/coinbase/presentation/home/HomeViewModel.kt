@@ -6,16 +6,23 @@ import com.example.coinbase.data.models.response.CoinResponse
 import com.example.coinbase.domain.repository.HomeRepository
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository
 ) : BaseViewModel<HomeIntent, HomeState>() {
+
+    private  val _uiState = MutableStateFlow(HomeUiState())
+    val uiState: StateFlow<HomeUiState> get () = _uiState
+
     private var coins: List<CoinResponse> = listOf()
 
     override fun handleIntent(intent: HomeIntent) {
-        when(intent) {
+        when (intent) {
             is HomeIntent.LoadCoins -> getCoins()
             is HomeIntent.FilterList -> filterList(intent.name)
         }
@@ -25,10 +32,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launchSuspendFun(
             blockToRun = { repository.getCoins() },
             onLoading = { loading ->
-               _state.value = HomeState.Loading(loading)
+                _state.value = HomeState.Loading(loading)
             },
             onSuccess = { response ->
-                _state.value = HomeState.LoadCoins(response)
+                _uiState.update {
+                    it.copy(list = response)
+                }
                 coins = response
             },
             onError = {
@@ -41,6 +50,8 @@ class HomeViewModel @Inject constructor(
         val coinsFiltered = coins.filter {
             it.name.lowercase().contains(text.lowercase())
         }
-       _state.value = HomeState.LoadCoins(coinsFiltered)
+        _uiState.update {
+            it.copy(list = coinsFiltered)
+        }
     }
 }

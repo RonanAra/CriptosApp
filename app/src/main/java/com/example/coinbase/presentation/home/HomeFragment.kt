@@ -9,10 +9,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.coinbase.databinding.FragmentHomeBinding
 import com.example.coinbase.data.models.response.CoinResponse
-import com.example.coinbase.presentation.home.adapter.CoinAdapter
+import com.example.coinbase.databinding.FragmentHomeBinding
+import com.example.coinbase.presentation.home.compose.components.ListCoins
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,12 +19,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
-
-    private val coinAdapter: CoinAdapter by lazy {
-        CoinAdapter { assetClicked ->
-            onClicked(assetClicked)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +42,17 @@ class HomeFragment : Fragment() {
             savedInstanceState
         )
         setObservers()
-        setupRecyclerView()
         setListeners()
+        setComposeView()
+    }
+
+    private fun setComposeView() {
+        binding.listComposeView.setContent {
+            ListCoins(
+                homeViewModel = viewModel,
+                onClickItem = { onClicked(it) }
+            )
+        }
     }
 
     override fun onResume() {
@@ -75,18 +77,10 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-        binding.rvCoinBase.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            adapter = coinAdapter
-        }
-    }
-
     private fun setObservers() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is HomeState.Error -> showError(state.message)
-                is HomeState.LoadCoins -> showCoins(state.list)
                 is HomeState.Loading -> showLoading(state.loading)
             }
         }
@@ -94,10 +88,6 @@ class HomeFragment : Fragment() {
 
     private fun showLoading(loading: Boolean) {
         binding.swipe.isRefreshing = loading
-    }
-
-    private fun showCoins(list: List<CoinResponse>) {
-        coinAdapter.submitList(list)
     }
 
     private fun showError(message: String) {

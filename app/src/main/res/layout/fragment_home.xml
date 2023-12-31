@@ -37,13 +37,10 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCoinBase"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/list_compose_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="12dp"
-            tools:listitem="@layout/card_item" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

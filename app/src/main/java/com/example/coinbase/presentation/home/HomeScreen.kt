@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.coinbase.R
+import com.example.coinbase.presentation.common.GenericLoadingTemplate
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 
@@ -24,20 +25,24 @@ fun HomeScreen(
 ) {
     val uiState by homeViewModel.uiState.collectAsState()
 
-    Column(modifier.fillMaxSize()) {
-        Text(
-            text = stringResource(R.string.assets_title),
-            modifier = Modifier.padding(16.dp)
-        )
-        SearchTextInput(
-            onValueChange = { text ->
-                homeViewModel.handleIntent(HomeIntent.FilterList(text))
-            }
-        )
-        ListCoins(
-            listCoins = uiState.list,
-            onClickItem = { onClickCardItem(it.website) },
-        )
+    if (uiState.loading) {
+        GenericLoadingTemplate()
+    } else {
+        Column(modifier.fillMaxSize()) {
+            Text(
+                text = stringResource(R.string.assets_title),
+                modifier = Modifier.padding(16.dp)
+            )
+            SearchTextInput(
+                onValueChange = { text ->
+                    homeViewModel.handleIntent(HomeIntent.FilterList(text))
+                }
+            )
+            ListCoins(
+                listCoins = uiState.list,
+                onClickItem = { onClickCardItem(it.website) },
+            )
+        }
     }
 }
 

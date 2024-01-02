@@ -36,7 +36,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launchSuspendFun(
             blockToRun = { repository.getCoins() },
             onLoading = { loading ->
-                _state.value = HomeState.Loading(loading)
+                _uiState.update { uiState ->
+                    uiState.copy(loading = loading)
+                }
             },
             onSuccess = { response ->
                 _uiState.update {

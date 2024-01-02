@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">CoinBase</string>
     <string name="explore">Search</string>
-    <string name="assets">Assets</string>
+    <string name="assets_title">Assets</string>
 </resources>

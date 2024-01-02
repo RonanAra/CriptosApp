@@ -21,6 +21,10 @@ class HomeViewModel @Inject constructor(
 
     private var coins: List<CoinResponse> = listOf()
 
+    init {
+        getCoins()
+    }
+
     override fun handleIntent(intent: HomeIntent) {
         when (intent) {
             is HomeIntent.LoadCoins -> getCoins()

@@ -1,4 +1,4 @@
-package com.example.coinbase.presentation.home.compose.components
+package com.example.coinbase.presentation.home.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

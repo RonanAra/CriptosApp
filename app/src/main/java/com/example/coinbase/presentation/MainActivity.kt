@@ -1,14 +1,17 @@
 package com.example.coinbase.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.coinbase.R
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import com.example.coinbase.presentation.navigation.CoinAppNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
+            CoinAppNavHost()
+        }
     }
 }

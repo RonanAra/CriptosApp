@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -21,9 +22,13 @@ import com.example.coinbase.presentation.home.components.SearchTextInput
 fun HomeScreen(
     onClickCardItem: (String) -> Unit,
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val uiState by homeViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(key1 = viewModel) {
+        viewModel.handleIntent(HomeIntent.LoadCoins)
+    }
 
     if (uiState.loading) {
         GenericLoadingTemplate()
@@ -35,7 +40,7 @@ fun HomeScreen(
             )
             SearchTextInput(
                 onValueChange = { text ->
-                    homeViewModel.handleIntent(HomeIntent.FilterList(text))
+                    viewModel.handleIntent(HomeIntent.FilterList(text))
                 }
             )
             ListCoins(

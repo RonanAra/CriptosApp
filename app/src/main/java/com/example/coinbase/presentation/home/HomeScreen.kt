@@ -27,7 +27,7 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(key1 = viewModel) {
-        viewModel.handleIntent(HomeIntent.LoadCoins)
+        viewModel.getCoins()
     }
 
     if (uiState.loading) GenericLoadingTemplate()
@@ -40,7 +40,7 @@ fun HomeScreen(
             )
             SearchTextInput(
                 onValueChange = { text ->
-                    viewModel.handleIntent(HomeIntent.FilterList(text))
+                    viewModel.filterList(text)
                 }
             )
             ListCoins(

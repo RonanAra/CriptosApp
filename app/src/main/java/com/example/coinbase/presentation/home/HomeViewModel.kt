@@ -14,21 +14,14 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository
-) : BaseViewModel<HomeIntent, HomeState>() {
+) : BaseViewModel<HomeState>() {
 
     private  val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> get () = _uiState
 
     private var coins: List<CoinResponse> = listOf()
 
-    override fun handleIntent(intent: HomeIntent) {
-        when (intent) {
-            is HomeIntent.LoadCoins -> getCoins()
-            is HomeIntent.FilterList -> filterList(intent.name)
-        }
-    }
-
-    private fun getCoins() {
+    fun getCoins() {
         viewModelScope.launchSuspendFun(
             blockToRun = { repository.getCoins() },
             onLoading = { loading ->
@@ -48,7 +41,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun filterList(text: String) {
+    fun filterList(text: String) {
         val coinsFiltered = coins.filter {
             it.name.lowercase().contains(text.lowercase())
         }

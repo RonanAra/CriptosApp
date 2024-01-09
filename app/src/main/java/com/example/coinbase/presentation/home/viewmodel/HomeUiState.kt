@@ -1,4 +1,4 @@
-package com.example.coinbase.presentation.home
+package com.example.coinbase.presentation.home.viewmodel
 
 import com.example.coinbase.data.models.response.CoinResponse
 

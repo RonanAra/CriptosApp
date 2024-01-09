@@ -17,6 +17,7 @@ import com.example.coinbase.R
 import com.example.coinbase.presentation.common.GenericLoadingTemplate
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
+import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(

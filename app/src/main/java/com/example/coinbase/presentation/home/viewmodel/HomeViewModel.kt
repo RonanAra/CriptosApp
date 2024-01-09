@@ -1,7 +1,7 @@
-package com.example.coinbase.presentation.home
+package com.example.coinbase.presentation.home.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinbase.base.BaseViewModel
 import com.example.coinbase.data.models.response.CoinResponse
 import com.example.coinbase.domain.repository.HomeRepository
 import com.example.coinbase.utils.launchSuspendFun
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository
-) : BaseViewModel<HomeState>() {
+) : ViewModel() {
 
     private  val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> get () = _uiState
@@ -35,9 +35,7 @@ class HomeViewModel @Inject constructor(
                 }
                 coins = response
             },
-            onError = {
-                _state.value = HomeState.Error(it.message.orEmpty())
-            }
+            onError = {}
         )
     }
 

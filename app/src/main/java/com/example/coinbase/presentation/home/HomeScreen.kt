@@ -30,9 +30,9 @@ fun HomeScreen(
         viewModel.handleIntent(HomeIntent.LoadCoins)
     }
 
-    if (uiState.loading) {
-        GenericLoadingTemplate()
-    } else {
+    if (uiState.loading) GenericLoadingTemplate()
+
+    if (uiState.list.isNotEmpty()) {
         Column(modifier.fillMaxSize()) {
             Text(
                 text = stringResource(R.string.assets_title),

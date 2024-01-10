@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun GenericLoadingTemplate(
+fun LoadingTemplate(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -25,5 +25,5 @@ fun GenericLoadingTemplate(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    GenericLoadingTemplate()
+    LoadingTemplate()
 }

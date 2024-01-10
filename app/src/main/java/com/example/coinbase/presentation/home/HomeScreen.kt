@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -18,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.example.coinbase.R
-import com.example.coinbase.presentation.common.GenericLoadingTemplate
+import com.example.coinbase.presentation.common.LoadingTemplate
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
@@ -45,7 +44,7 @@ fun HomeScreen(
         }
     )
 
-    if (uiState.loading) GenericLoadingTemplate()
+    if (uiState.loading) LoadingTemplate()
 
     if (uiState.list.isNotEmpty()) {
         Column(modifier.fillMaxSize()) {

@@ -36,7 +36,14 @@ class HomeViewModel @Inject constructor(
                 }
                 coins = response
             },
-            onError = {}
+            onError = { error ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        errorMessage = error.message.orEmpty(),
+                        showError = true
+                    )
+                }
+            }
         )
     }
 
@@ -46,6 +53,12 @@ class HomeViewModel @Inject constructor(
         }
         _uiState.update {
             it.copy(list = coinsFiltered)
+        }
+    }
+
+    fun dismissErrorDialog() {
+        _uiState.update { currentState ->
+            currentState.copy(showError = false)
         }
     }
 }

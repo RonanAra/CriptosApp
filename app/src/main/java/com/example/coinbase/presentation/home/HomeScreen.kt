@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.coinbase.R
 import com.example.coinbase.presentation.common.LoadingTemplate
+import com.example.coinbase.presentation.home.components.ErrorDialog
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
@@ -33,6 +34,19 @@ fun HomeScreen(
     }
 
     if (uiState.loading) LoadingTemplate()
+
+    if (uiState.showError) {
+        ErrorDialog(
+            message = uiState.errorMessage,
+            onDismiss = viewModel::dismissErrorDialog,
+            onConfirm = {
+                viewModel.apply {
+                    getCoins()
+                    dismissErrorDialog()
+                }
+            }
+        )
+    }
 
     if (uiState.list.isNotEmpty()) {
         Column(modifier.fillMaxSize()) {

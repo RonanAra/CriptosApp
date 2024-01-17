@@ -4,5 +4,7 @@ import com.example.coinbase.data.models.response.CoinResponse
 
 data class HomeUiState(
     val list: List<CoinResponse> = listOf(),
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val showError: Boolean = false,
+    val errorMessage: String = ""
 )

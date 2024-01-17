@@ -2,4 +2,7 @@
     <string name="app_name">CoinBase</string>
     <string name="explore">Search</string>
     <string name="assets_title">Assets</string>
+    <string name="error_dialog_title">Ops, Aconteceu algo errado!</string>
+    <string name="error_dialog_btn_confirm">Ok</string>
+    <string name="unknown_error">Erro desconhecido</string>
 </resources>

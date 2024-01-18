@@ -8,7 +8,6 @@
 <li>Consumo de API (Retrofit + OkHttp)</li>
 <li>Coroutines e Flow</li>
 <li>Coil</li>
-<li>ViewModel</li>
 
 <h3>Próximas implementações</h3>
 <li>Paging 3</li>

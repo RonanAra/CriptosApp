@@ -5,4 +5,5 @@
     <string name="error_dialog_title">Ops, Aconteceu algo errado!</string>
     <string name="error_dialog_btn_confirm">Ok</string>
     <string name="unknown_error">Erro desconhecido</string>
+    <string name="empty_place_holder">A lista está vazia</string>
 </resources>

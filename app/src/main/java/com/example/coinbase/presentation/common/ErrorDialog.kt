@@ -1,4 +1,4 @@
-package com.example.coinbase.presentation.home.components
+package com.example.coinbase.presentation.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape

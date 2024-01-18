@@ -16,7 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.coinbase.R
 import com.example.coinbase.presentation.common.LoadingTemplate
-import com.example.coinbase.presentation.home.components.ErrorDialog
+import com.example.coinbase.presentation.common.ErrorDialog
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel

@@ -15,4 +15,4 @@
 <li>Testes unitários</li>
 
 
-<br><img src="screenshotlist.png" height="520" width="520" />
+<br><img src="screenshotlist.png"" />

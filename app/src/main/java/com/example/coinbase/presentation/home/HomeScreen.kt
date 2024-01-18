@@ -17,6 +17,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.coinbase.R
 import com.example.coinbase.presentation.common.LoadingTemplate
 import com.example.coinbase.presentation.common.ErrorDialog
+import com.example.coinbase.presentation.home.components.EmptyPlaceHolder
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
@@ -48,21 +49,29 @@ fun HomeScreen(
         )
     }
 
-    if (uiState.list.isNotEmpty()) {
-        Column(modifier.fillMaxSize()) {
-            Text(
-                text = stringResource(R.string.assets_title),
-                modifier = Modifier.padding(16.dp)
-            )
-            SearchTextInput(
-                onValueChange = { text ->
-                    viewModel.filterList(text)
+
+    Column(modifier.fillMaxSize()) {
+        Text(
+            text = stringResource(R.string.assets_title),
+            modifier = Modifier.padding(16.dp)
+        )
+        SearchTextInput(
+            onValueChange = { text ->
+                viewModel.filterList(text)
+            }
+        )
+        uiState.apply {
+            when {
+                list.isNotEmpty() -> {
+                    ListCoins(
+                        listCoins = list,
+                        onClickItem = { onClickCardItem(it.website) },
+                    )
                 }
-            )
-            ListCoins(
-                listCoins = uiState.list,
-                onClickItem = { onClickCardItem(it.website) },
-            )
+                loading.not() && list.isEmpty() -> {
+                    EmptyPlaceHolder()
+                }
+            }
         }
     }
 }

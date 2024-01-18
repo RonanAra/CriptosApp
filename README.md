@@ -15,6 +15,4 @@
 <li>Testes unitários</li>
 
 
-<h1>Video</h1>
-
-[![Watch the video](https://github.com/RonanAra/CriptosApp/blob/main/1633578164813%20(1).gif)]
+<img src="screenshotlist.png" />

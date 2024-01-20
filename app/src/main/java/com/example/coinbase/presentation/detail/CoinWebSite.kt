@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import com.example.coinbase.presentation.common.LoadingTemplate
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
@@ -26,6 +27,8 @@ fun CoinDetailWebView(
     LifecycleEventEffect(event = Lifecycle.Event.ON_RESUME) {
         viewModel.load(url)
     }
+
+    if (webViewState.isLoading) LoadingTemplate()
 
     if (uiState.url.isNotEmpty()) {
         WebView(

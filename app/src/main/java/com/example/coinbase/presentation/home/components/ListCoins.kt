@@ -7,12 +7,12 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.coinbase.data.models.response.CoinResponse
+import com.example.coinbase.domain.entity.CoinModel
 
 @Composable
 fun ListCoins(
-    listCoins: List<CoinResponse>,
-    onClickItem: (CoinResponse) -> Unit,
+    listCoins: List<CoinModel>,
+    onClickItem: (CoinModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
 

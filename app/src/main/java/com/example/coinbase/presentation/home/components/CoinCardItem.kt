@@ -21,13 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.coinbase.data.models.response.CoinResponse
+import com.example.coinbase.domain.entity.CoinModel
 import android.graphics.Color as ColorGraphic
 
 @Composable
 fun CoinCardItem(
-    item: CoinResponse,
-    onClickItem: (CoinResponse) -> Unit,
+    item: CoinModel,
+    onClickItem: (CoinModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -79,7 +79,7 @@ fun CoinCardItem(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    val item = CoinResponse(
+    val item = CoinModel(
         color = "#F7931A",
         id = "5b71fc48-3dd3-540c-809b-f8c94d0e68b5",
         imageUrl = "https://dynamic-assets.coinbase.com/" +

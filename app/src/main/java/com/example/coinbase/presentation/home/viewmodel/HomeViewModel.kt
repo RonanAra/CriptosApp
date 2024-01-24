@@ -2,7 +2,7 @@ package com.example.coinbase.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinbase.data.models.response.CoinResponse
+import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.repository.HomeRepository
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
     private  val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    private var coins: List<CoinResponse> = listOf()
+    private var coins: List<CoinModel> = listOf()
 
     fun getCoins() {
         viewModelScope.launchSuspendFun(

@@ -1,7 +1,7 @@
 package com.example.coinbase.domain.repository
 
-import com.example.coinbase.data.models.response.CoinResponse
+import com.example.coinbase.domain.entity.CoinModel
 
 interface HomeRepository {
-    suspend fun getCoins(): List<CoinResponse>
+    suspend fun getCoins(): List<CoinModel>
 }

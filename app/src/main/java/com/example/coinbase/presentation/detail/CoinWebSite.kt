@@ -17,7 +17,6 @@ import com.google.accompanist.web.rememberWebViewState
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun CoinDetailWebView(
-    url: String,
     modifier: Modifier = Modifier,
     viewModel: WebSiteViewModel = hiltViewModel()
 ) {
@@ -25,7 +24,7 @@ fun CoinDetailWebView(
     val webViewState = rememberWebViewState(uiState.url)
 
     LifecycleEventEffect(event = Lifecycle.Event.ON_RESUME) {
-        viewModel.load(url)
+        viewModel.load()
     }
 
     if (webViewState.isLoading) LoadingTemplate()
@@ -45,5 +44,5 @@ fun CoinDetailWebView(
 @Preview
 @Composable
 private fun Preview() {
-    CoinDetailWebView(url = "")
+    CoinDetailWebView()
 }

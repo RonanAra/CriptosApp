@@ -39,7 +39,10 @@ fun CoinAppNavHost(
                     factory.create(url.orEmpty())
                 }
             )
-            CoinDetailWebView(viewModel = viewModel)
+            CoinDetailWebView(
+                viewModel = viewModel,
+                navigationUpCallback = { navController.popBackStack() }
+            )
         }
     }
 }

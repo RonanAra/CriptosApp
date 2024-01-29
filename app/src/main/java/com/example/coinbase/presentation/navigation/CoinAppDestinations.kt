@@ -13,9 +13,9 @@ object Home : NavDestination {
 
 object Detail : NavDestination {
     override val route: String = "detail"
-    const val urlTypeArg = "url"
-    val routeWithArgs = "${route}/{$urlTypeArg}"
+    const val coinTypeArg = "coin_model"
+    val routeWithArgs = "${route}/{$coinTypeArg}"
     val arguments = listOf(
-        navArgument(urlTypeArg) { type = NavType.StringType }
+        navArgument(coinTypeArg) { type = NavType.StringType }
     )
 }

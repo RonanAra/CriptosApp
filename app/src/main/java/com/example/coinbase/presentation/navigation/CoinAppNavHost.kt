@@ -7,10 +7,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.presentation.detail.CoinDetailWebView
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
 import com.example.coinbase.presentation.home.HomeScreen
-import com.example.coinbase.utils.encodeUrl
+import com.example.coinbase.utils.deserializeArgs
+import com.example.coinbase.utils.serializableArgs
 
 @Composable
 fun CoinAppNavHost(
@@ -24,8 +26,8 @@ fun CoinAppNavHost(
     ) {
         composable(route = Home.route) {
             HomeScreen(
-                onClickCardItem = { url ->
-                    navController.navigate("${Detail.route}/${url.encodeUrl()}")
+                onClickCardItem = { coinModel ->
+                    navController.navigate("${Detail.route}/${coinModel.serializableArgs()}")
                 }
             )
         }
@@ -33,16 +35,19 @@ fun CoinAppNavHost(
             route = Detail.routeWithArgs,
             arguments = Detail.arguments
         ) { backStackEntry ->
-            val url = backStackEntry.arguments?.getString(Detail.urlTypeArg)
-            val viewModel: WebSiteViewModel = hiltViewModel(
-                creationCallback = { factory: WebSiteViewModel.MyViewModelFactory ->
-                    factory.create(url.orEmpty())
-                }
-            )
-            CoinDetailWebView(
-                viewModel = viewModel,
-                navigationUpCallback = { navController.popBackStack() }
-            )
+            val argument = backStackEntry.arguments?.getString(Detail.coinTypeArg)
+            val coinModel = argument.deserializeArgs<CoinModel>()
+            coinModel?.let { model ->
+                val viewModel: WebSiteViewModel = hiltViewModel(
+                    creationCallback = { factory: WebSiteViewModel.MyViewModelFactory ->
+                        factory.create(model)
+                    }
+                )
+                CoinDetailWebView(
+                    viewModel = viewModel,
+                    navigationUpCallback = { navController.popBackStack() }
+                )
+            }
         }
     }
 }

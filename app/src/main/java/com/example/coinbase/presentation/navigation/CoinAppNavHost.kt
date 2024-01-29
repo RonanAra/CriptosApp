@@ -11,8 +11,8 @@ import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.presentation.detail.CoinDetailWebView
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
 import com.example.coinbase.presentation.home.HomeScreen
-import com.example.coinbase.utils.deserializeArgs
-import com.example.coinbase.utils.serializableArgs
+import com.example.coinbase.utils.decodeObjectToArgs
+import com.example.coinbase.utils.encodeObjectToArgs
 
 @Composable
 fun CoinAppNavHost(
@@ -27,7 +27,7 @@ fun CoinAppNavHost(
         composable(route = Home.route) {
             HomeScreen(
                 onClickCardItem = { coinModel ->
-                    navController.navigate("${Detail.route}/${coinModel.serializableArgs()}")
+                    navController.navigate("${Detail.route}/${coinModel.encodeObjectToArgs()}")
                 }
             )
         }
@@ -36,7 +36,7 @@ fun CoinAppNavHost(
             arguments = Detail.arguments
         ) { backStackEntry ->
             val argument = backStackEntry.arguments?.getString(Detail.coinTypeArg)
-            val coinModel = argument.deserializeArgs<CoinModel>()
+            val coinModel = argument.decodeObjectToArgs<CoinModel>()
             coinModel?.let { model ->
                 val viewModel: WebSiteViewModel = hiltViewModel(
                     creationCallback = { factory: WebSiteViewModel.MyViewModelFactory ->

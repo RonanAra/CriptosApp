@@ -4,7 +4,7 @@ import android.net.Uri
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 
-fun <T> T.serializableArgs(): String {
+fun <T> T.encodeObjectToArgs(): String {
     return try {
         Uri.encode(Gson().toJson(this))
     } catch (_: RuntimeException) {
@@ -12,7 +12,7 @@ fun <T> T.serializableArgs(): String {
     }
 }
 
-inline fun <reified R> String?.deserializeArgs(): R? {
+inline fun <reified R> String?.decodeObjectToArgs(): R? {
     return try {
         Gson().fromJson(this , R::class.java)
     } catch (e: JsonSyntaxException) {

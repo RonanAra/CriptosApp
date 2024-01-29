@@ -14,7 +14,9 @@ fun <T> T.encodeObjectToArgs(): String {
 
 inline fun <reified R> String?.decodeObjectToArgs(): R? {
     return try {
-        Gson().fromJson(this , R::class.java)
+        if (!this.isNullOrEmpty()) {
+            Gson().fromJson(this, R::class.java)
+        } else null
     } catch (e: JsonSyntaxException) {
         e.printStackTrace()
         null

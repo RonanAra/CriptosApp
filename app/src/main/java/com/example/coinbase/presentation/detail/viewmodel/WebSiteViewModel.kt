@@ -1,6 +1,7 @@
 package com.example.coinbase.presentation.detail.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.coinbase.domain.entity.CoinModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.update
 
 @HiltViewModel(assistedFactory = WebSiteViewModel.MyViewModelFactory::class)
 class WebSiteViewModel @AssistedInject constructor(
-    @Assisted private val url: String
+    @Assisted private val coinModel: CoinModel
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(WebSiteUiState())
@@ -20,12 +21,15 @@ class WebSiteViewModel @AssistedInject constructor(
 
     fun load() {
         _uiState.update { currentState ->
-            currentState.copy(url = url)
+            currentState.copy(
+                url = coinModel.website,
+                title = coinModel.name
+            )
         }
     }
 
     @AssistedFactory
     interface MyViewModelFactory {
-        fun create(url: String): WebSiteViewModel
+        fun create(coinModel: CoinModel): WebSiteViewModel
     }
 }

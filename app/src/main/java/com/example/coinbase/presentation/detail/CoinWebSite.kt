@@ -1,7 +1,6 @@
 package com.example.coinbase.presentation.detail
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,7 +39,10 @@ fun CoinDetailWebView(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            AppTopBar(navigationUpCallback = navigationUpCallback)
+            AppTopBar(
+                title = uiState.title,
+                navigationUpCallback = navigationUpCallback
+            )
         }
     ) { paddingValues ->
         if (uiState.url.isNotEmpty()) {

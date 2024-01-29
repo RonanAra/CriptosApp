@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.coinbase.R
+import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.presentation.common.LoadingTemplate
 import com.example.coinbase.presentation.common.ErrorDialog
 import com.example.coinbase.presentation.home.components.EmptyPlaceHolder
@@ -24,7 +25,7 @@ import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    onClickCardItem: (String) -> Unit,
+    onClickCardItem: (CoinModel) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -65,7 +66,7 @@ fun HomeScreen(
                 list.isNotEmpty() -> {
                     ListCoins(
                         listCoins = list,
-                        onClickItem = { onClickCardItem(it.website) },
+                        onClickItem = { onClickCardItem(it) },
                     )
                 }
                 loading.not() && list.isEmpty() -> {

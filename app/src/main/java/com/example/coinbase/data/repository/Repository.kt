@@ -1,5 +1,6 @@
 package com.example.coinbase.data.repository
 
+import com.example.coinbase.data.mapper.toItemCoinModel
 import com.example.coinbase.data.service.CoinService
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.repository.HomeRepository
@@ -10,6 +11,6 @@ class HomeRepositoryImpl @Inject constructor(
 ): HomeRepository {
 
     override suspend fun getCoins(): List<CoinModel> {
-        return service.getCoinsList().data.map { it.toModel() }
+        return service.getCoinsList().data.map { it.toItemCoinModel() }
     }
 }

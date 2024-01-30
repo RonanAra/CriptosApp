@@ -12,15 +12,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
+import com.example.coinbase.R
 import com.example.coinbase.domain.entity.CoinModel
 import android.graphics.Color as ColorGraphic
 
@@ -46,12 +51,21 @@ fun CoinCardItem(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            AsyncImage(
-                model = item.imageUrl,
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(item.imageUrl)
+                    .error(R.drawable.no_image_available)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = item.name,
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(70.dp)
                     .padding(12.dp),
+                loading = {
+                    CircularProgressIndicator(
+                        color = Color.Blue
+                    )
+                }
             )
         }
         Column(

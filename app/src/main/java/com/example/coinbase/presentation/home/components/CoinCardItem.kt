@@ -56,6 +56,7 @@ fun CoinCardItem(
                     .data(item.imageUrl)
                     .error(R.drawable.no_image_available)
                     .crossfade(true)
+                    .crossfade(1000)
                     .build(),
                 contentDescription = item.name,
                 modifier = Modifier

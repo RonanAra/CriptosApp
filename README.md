@@ -5,12 +5,11 @@
 <li>Jetpack Compose</li> 
 <li>MVVM + Clean Architecture</li> 
 <li>Fluxo de dados Unidirecional</li> 
-<li>Consumo de API (Retrofit + OkHttp)</li>
+<li>Consumo de API (Retrofit + OkHttp + Gson)</li>
 <li>Coroutines e Flow</li>
 <li>Coil</li>
 
 <h3>Próximas implementações</h3>
-<li>Paging 3</li>
 <li>Room</li>
 <li>Testes unitários</li>
 

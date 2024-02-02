@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.repository.HomeRepository
+import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val coinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
 
     private  val _uiState = MutableStateFlow(HomeUiState())
@@ -24,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     fun getCoins() {
         viewModelScope.launchSuspendFun(
-            blockToRun = { repository.getCoins() },
+            blockToRun = { coinsUseCase() },
             onLoading = { loading ->
                 _uiState.update { uiState ->
                     uiState.copy(loading = loading)

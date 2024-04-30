@@ -36,7 +36,7 @@ fun CoinAppNavHost(
             arguments = Detail.arguments
         ) { backStackEntry ->
             val argument = backStackEntry.arguments?.getString(Detail.coinTypeArg)
-            val coinModel = argument.decodeObjectToArgs<CoinModel>()
+            val coinModel = argument?.decodeObjectToArgs<CoinModel>()
             coinModel?.let { model ->
                 val viewModel: WebSiteViewModel = hiltViewModel(
                     creationCallback = { factory: WebSiteViewModel.MyViewModelFactory ->

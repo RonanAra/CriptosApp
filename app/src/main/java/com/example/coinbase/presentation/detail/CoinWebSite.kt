@@ -15,8 +15,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.coinbase.presentation.common.AppTopBar
 import com.example.coinbase.presentation.common.LoadingTemplate
+import com.example.coinbase.presentation.common.WebViewTemplate
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
-import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,16 +45,10 @@ fun CoinDetailWebView(
             )
         }
     ) { paddingValues ->
-        if (uiState.url.isNotEmpty()) {
-            WebView(
-                modifier = Modifier.padding(paddingValues),
-                state = webViewState,
-                captureBackPresses = true,
-                onCreated = { webView ->
-                    webView.settings.javaScriptEnabled = true
-                }
-            )
-        }
+        WebViewTemplate(
+            modifier = Modifier.padding(paddingValues),
+            url = uiState.url
+        )
     }
 }
 

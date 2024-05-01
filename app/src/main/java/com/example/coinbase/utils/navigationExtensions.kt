@@ -15,7 +15,9 @@ inline fun <reified T> T.encodeObjectToArgs(): String {
 
 inline fun <reified R> String.decodeObjectToArgs(): R? {
     return try {
-        Json.decodeFromString<R>(this)
+        if (this.isNotEmpty()) {
+            Json.decodeFromString<R>(this)
+        } else null
     } catch (e: Exception) {
         e.printStackTrace()
         null

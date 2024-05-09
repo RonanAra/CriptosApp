@@ -36,9 +36,9 @@ inline fun <reified T : Any> serializableType(
         return bundle.getString(key)?.let<String, T>(Json::decodeFromString)
     }
 
-    override fun parseValue(value: String): T = value.decodeObjectToArgs<T>()!!
+    override fun parseValue(value: String): T = Json.decodeFromString<T>(value)
 
-    override fun serializeAsValue(value: T): String = value.encodeObjectToArgs()
+    override fun serializeAsValue(value: T): String = Json.encodeToString(value)
 
     override fun put(
         bundle: Bundle,

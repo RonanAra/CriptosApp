@@ -6,7 +6,7 @@ import com.example.coinbase.domain.entity.CoinModel
 
 class CoinListMapperToModel : Mapper<CoinResponse, CoinModel> {
     override fun mapFrom(from: CoinResponse): CoinModel {
-        from.apply {
+        with(from) {
             return CoinModel(
                 color = color,
                 id = id,

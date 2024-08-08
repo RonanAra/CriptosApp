@@ -8,6 +8,10 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
+def keystorePropertiesFile = rootProject.file("app/keystore/keystore.properties")
+def keystoreProperties = new Properties()
+keystorePropertiesFile.withInputStream {keystoreProperties.load(it) }
+
 android {
     compileSdk 34
 
@@ -23,9 +27,22 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
+            storePassword keystoreProperties["storePassword"]
+            keyPassword keystoreProperties["keyPassword"]
+            keyAlias keystoreProperties["keyAlias"]
+            storeFile file(keystoreProperties["storeFile"])
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            debuggable true
+        }
+        release {
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

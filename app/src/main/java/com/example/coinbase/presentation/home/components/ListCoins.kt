@@ -15,8 +15,8 @@ fun ListCoins(
     onClickItem: (CoinModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    LazyVerticalGrid(
+    if (listCoins.isEmpty()) EmptyPlaceHolder()
+    else LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = modifier.padding(top = 4.dp)
     ) {

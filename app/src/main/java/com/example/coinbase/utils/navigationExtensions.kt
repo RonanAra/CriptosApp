@@ -3,6 +3,7 @@ package com.example.coinbase.utils
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
+import com.example.coinbase.domain.entity.CoinModel
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -28,26 +29,32 @@ inline fun <reified R> String.decodeObjectToArgs(): R? {
 
 inline fun <reified T : Any> serializableType(
     isNullableAllowed: Boolean = false
-) = object : NavType<T>(isNullableAllowed = isNullableAllowed) {
-    override fun get(
-        bundle: Bundle,
-        key: String
-    ): T? {
-        return bundle.getString(key)?.let<String, T>(Json::decodeFromString)
-    }
+): NavType<T> {
+    return object : NavType<T>(isNullableAllowed = isNullableAllowed) {
+        override fun get(
+            bundle: Bundle,
+            key: String
+        ): T? {
+            return Json.decodeFromString(bundle.getString(key) ?: return null)
+        }
 
-    override fun parseValue(value: String): T = Json.decodeFromString<T>(value)
+        override fun parseValue(value: String): T {
+            return Json.decodeFromString(Uri.decode(value))
+        }
 
-    override fun serializeAsValue(value: T): String = Json.encodeToString(value)
+        override fun serializeAsValue(value: T): String {
+            return Uri.encode(Json.encodeToString(value))
+        }
 
-    override fun put(
-        bundle: Bundle,
-        key: String,
-        value: T
-    ) {
-        bundle.putString(
-            key,
-            Json.encodeToString(value)
-        )
+        override fun put(
+            bundle: Bundle,
+            key: String,
+            value: T
+        ) {
+            bundle.putString(
+                key,
+                Json.encodeToString(value)
+            )
+        }
     }
 }

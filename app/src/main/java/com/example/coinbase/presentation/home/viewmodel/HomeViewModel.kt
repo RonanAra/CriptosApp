@@ -2,6 +2,8 @@ package com.example.coinbase.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
+import com.example.coinbase.common.connectivity.ConnectivityState
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.utils.CoroutinesConstants
@@ -15,8 +17,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val coinsUseCase: GetCoinsUseCase
+    private val coinsUseCase: GetCoinsUseCase,
+    private val connectivityHelper: ConnectivityManagerHelper
 ) : ViewModel() {
+    val isConnected: StateFlow<ConnectivityState> = connectivityHelper.state
 
     private  val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -70,5 +74,10 @@ class HomeViewModel @Inject constructor(
                 errorMessage = CoroutinesConstants.ERROR_UNKNOWN_HOST
             )
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        connectivityHelper.unregisterCallback()
     }
 }

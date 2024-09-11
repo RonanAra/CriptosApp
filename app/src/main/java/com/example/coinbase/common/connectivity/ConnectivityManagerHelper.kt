@@ -5,9 +5,17 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import androidx.lifecycle.LiveData
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class ConnectionStateLiveData(context: Context) : LiveData<Boolean>() {
+class ConnectivityManagerHelper @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
+    private val _state = MutableStateFlow(ConnectivityState())
+    val state: StateFlow<ConnectivityState> get() = _state
 
     private val connectivityManager = context
         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -15,19 +23,22 @@ class ConnectionStateLiveData(context: Context) : LiveData<Boolean>() {
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            postValue(true)
+            _state.update { currentState ->
+                currentState.copy(value = true)
+            }
         }
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            postValue(false)
+            _state.update { currentState ->
+                currentState.copy(value = false)
+            }
         }
     }
 
-    override fun onActive() {
-        super.onActive()
-
-        val networkRequest = NetworkRequest.Builder()
+    init {
+        val networkRequest = NetworkRequest
+            .Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
             .build()
 
@@ -37,19 +48,9 @@ class ConnectionStateLiveData(context: Context) : LiveData<Boolean>() {
         )
     }
 
-    override fun onInactive() {
-        super.onInactive()
+    fun unregisterCallback() {
         connectivityManager.unregisterNetworkCallback(networkCallback)
     }
-
-    companion object {
-        private lateinit var instance: ConnectionStateLiveData
-
-        fun get(context: Context): ConnectionStateLiveData {
-            if (!::instance.isInitialized) {
-                instance = ConnectionStateLiveData(context.applicationContext)
-            }
-            return instance
-        }
-    }
 }
+
+data class ConnectivityState(var value: Boolean? = null)

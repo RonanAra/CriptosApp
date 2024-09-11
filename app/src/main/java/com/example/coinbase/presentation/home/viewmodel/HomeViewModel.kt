@@ -3,8 +3,8 @@ package com.example.coinbase.presentation.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinbase.domain.entity.CoinModel
-import com.example.coinbase.domain.repository.HomeRepository
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
+import com.example.coinbase.utils.CoroutinesConstants
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,6 +60,15 @@ class HomeViewModel @Inject constructor(
     fun dismissErrorDialog() {
         _uiState.update { currentState ->
             currentState.copy(showError = false)
+        }
+    }
+
+    fun showErrorUnknownHost() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                showError = true,
+                errorMessage = CoroutinesConstants.ERROR_UNKNOWN_HOST
+            )
         }
     }
 }

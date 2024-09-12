@@ -14,8 +14,8 @@ import javax.inject.Inject
 class ConnectivityManagerHelper @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    private val _state = MutableStateFlow(ConnectivityState())
-    val state: StateFlow<ConnectivityState> get() = _state
+    private val _connectivityState = MutableStateFlow(ConnectivityState())
+    val connectivityState: StateFlow<ConnectivityState> get() = _connectivityState
 
     private val connectivityManager = context
         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -23,14 +23,14 @@ class ConnectivityManagerHelper @Inject constructor(
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            _state.update { currentState ->
+            _connectivityState.update { currentState ->
                 currentState.copy(value = true)
             }
         }
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            _state.update { currentState ->
+            _connectivityState.update { currentState ->
                 currentState.copy(value = false)
             }
         }

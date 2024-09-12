@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
     private val coinsUseCase: GetCoinsUseCase,
     private val connectivityHelper: ConnectivityManagerHelper
 ) : ViewModel() {
-    val isConnected: StateFlow<ConnectivityState> = connectivityHelper.state
+    val isConnected: StateFlow<ConnectivityState> = connectivityHelper.connectivityState
 
     private  val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()

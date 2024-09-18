@@ -6,12 +6,15 @@ import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
 import com.example.coinbase.common.connectivity.ConnectivityState
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
+import com.example.coinbase.utils.AppConstants
 import com.example.coinbase.utils.CoroutinesConstants
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -22,8 +25,14 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     val isConnected: StateFlow<ConnectivityState> = connectivityHelper.connectivityState
 
-    private  val _uiState = MutableStateFlow(HomeUiState())
-    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(HomeUiState())
+    val uiState: StateFlow<HomeUiState> = _uiState
+        .onStart { getCoins() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(AppConstants.STOP_TIMEOUT_MILLIS),
+            initialValue = HomeUiState()
+        )
 
     private var coins: List<CoinModel> = listOf()
 

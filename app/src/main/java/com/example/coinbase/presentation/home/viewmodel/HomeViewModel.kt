@@ -61,12 +61,15 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun filterList(text: String) {
+    fun onSearchCoinByName(text: String) {
         val coinsFiltered = coins.filter {
             it.name.lowercase().contains(text.lowercase())
         }
         _uiState.update {
-            it.copy(list = coinsFiltered)
+            it.copy(
+                list = coinsFiltered,
+                searchInputText = text
+            )
         }
     }
 

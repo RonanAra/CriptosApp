@@ -53,9 +53,8 @@ fun HomeScreen(
             modifier = Modifier.padding(16.dp)
         )
         SearchTextInput(
-            onValueChange = { text ->
-                viewModel.filterList(text)
-            }
+            searchText = uiState.searchInputText,
+            onValueChange = viewModel::onSearchCoinByName
         )
         ListCoins(
             listCoins = uiState.list,

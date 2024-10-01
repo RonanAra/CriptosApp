@@ -6,5 +6,6 @@ data class HomeUiState(
     val list: List<CoinModel> = listOf(),
     val loading: Boolean = false,
     val showError: Boolean = false,
-    val errorMessage: String = ""
+    val errorMessage: String = "",
+    val searchInputText: String = ""
 )

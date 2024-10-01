@@ -8,10 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,20 +16,16 @@ import com.example.coinbase.R
 
 @Composable
 fun SearchTextInput(
+    searchText: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var value by remember { mutableStateOf("") }
-
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
-        value = value,
-        onValueChange = {
-            value = it
-            onValueChange(it)
-        },
+        value = searchText,
+        onValueChange = { onValueChange(it) },
         label = {
             Text(text = stringResource(R.string.explore))
         },
@@ -50,6 +42,7 @@ fun SearchTextInput(
 @Composable
 private fun Preview() {
     SearchTextInput(
+        searchText = "",
         onValueChange = {}
     )
 }

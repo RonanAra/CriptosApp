@@ -8,12 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.presentation.detail.CoinDetailWebView
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
 import com.example.coinbase.presentation.home.HomeScreen
-import com.example.coinbase.utils.serializableType
-import kotlin.reflect.typeOf
 
 @Composable
 fun CoinAppNavHost(
@@ -32,9 +29,7 @@ fun CoinAppNavHost(
                 }
             )
         }
-        composable<Detail>(
-            typeMap = mapOf(typeOf<CoinModel>() to serializableType<CoinModel>())
-        ) { backStackEntry ->
+        composable<Detail>(typeMap = Detail.typeMap) { backStackEntry ->
             val detailRoute = backStackEntry.toRoute<Detail>()
             val viewModel: WebSiteViewModel = hiltViewModel(
                 creationCallback = { factory: WebSiteViewModel.MyViewModelFactory ->

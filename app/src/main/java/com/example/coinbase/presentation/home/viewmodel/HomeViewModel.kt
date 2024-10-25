@@ -2,12 +2,9 @@ package com.example.coinbase.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
-import com.example.coinbase.common.connectivity.ConnectivityState
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.utils.AppConstants
-import com.example.coinbase.utils.CoroutinesConstants
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val coinsUseCase: GetCoinsUseCase,
-    private val connectivityHelper: ConnectivityManagerHelper
+    private val coinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
-    val isConnected: StateFlow<ConnectivityState> = connectivityHelper.connectivityState
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState
@@ -77,19 +72,5 @@ class HomeViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(showError = false)
         }
-    }
-
-    fun showErrorUnknownHost() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                showError = true,
-                errorMessage = CoroutinesConstants.ERROR_UNKNOWN_HOST
-            )
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        connectivityHelper.unregisterCallback()
     }
 }

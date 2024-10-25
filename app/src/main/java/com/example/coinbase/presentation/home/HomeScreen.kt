@@ -26,7 +26,6 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val isConnected by viewModel.isConnected.collectAsStateWithLifecycle()
 
     if (uiState.loading) LoadingTemplate()
 
@@ -41,10 +40,6 @@ fun HomeScreen(
                 }
             }
         )
-    }
-
-    isConnected.value?.let { connected ->
-        if (!connected) viewModel.showErrorUnknownHost()
     }
 
     Column(Modifier.fillMaxSize()) {

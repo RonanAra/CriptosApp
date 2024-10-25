@@ -1,11 +1,16 @@
 package com.example.coinbase.di
 
+import android.content.Context
 import com.example.coinbase.BuildConfig
+import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
+import com.example.coinbase.data.intercptor.NetworkStatusInterceptor
 import com.example.coinbase.data.service.CoinService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,30 +24,57 @@ object NetworkModule {
     private const val TIMEOUT_SECONDS = 15L
 
     @Provides
+    fun provideConnectivityManagerHelper(
+        @ApplicationContext context: Context
+    ): ConnectivityManagerHelper {
+        return ConnectivityManagerHelper(context)
+    }
+
+    @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            setLevel(
-                if (BuildConfig.DEBUG) {
-                    HttpLoggingInterceptor.Level.BODY
-                } else HttpLoggingInterceptor.Level.NONE
-            )
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
     }
 
     @Provides
     fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor,
+        interceptors: @JvmSuppressWildcards(true) List<Interceptor>
     ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+        val builder = OkHttpClient.Builder()
             .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .build()
+
+        interceptors.forEach { builder.addInterceptor(it) }
+
+        return builder.build()
     }
 
     @Provides
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
+    }
+
+    @Provides
+    fun provideInterceptors(
+        loggingInterceptor: HttpLoggingInterceptor,
+        networkStatusInterceptor: NetworkStatusInterceptor
+    ): List<Interceptor> {
+        return listOf(
+            loggingInterceptor,
+            networkStatusInterceptor
+        )
+    }
+
+    @Provides
+    fun provideNetworkStatusInterceptor(
+        connectivityManagerHelper: ConnectivityManagerHelper
+    ): NetworkStatusInterceptor {
+        return NetworkStatusInterceptor(connectivityManagerHelper)
     }
 
     @Provides

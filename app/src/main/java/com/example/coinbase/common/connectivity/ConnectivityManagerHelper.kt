@@ -6,16 +6,15 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class ConnectivityManagerHelper @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    private val _connectivityState = MutableStateFlow(ConnectivityState())
-    val connectivityState: StateFlow<ConnectivityState> get() = _connectivityState
+    val isConnected: Boolean get() = _isConnected.get()
+
+    private var _isConnected: AtomicBoolean = AtomicBoolean(false)
 
     private val connectivityManager = context
         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -23,16 +22,12 @@ class ConnectivityManagerHelper @Inject constructor(
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            _connectivityState.update { currentState ->
-                currentState.copy(value = true)
-            }
+            _isConnected = AtomicBoolean(true)
         }
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            _connectivityState.update { currentState ->
-                currentState.copy(value = false)
-            }
+            _isConnected = AtomicBoolean(false)
         }
     }
 
@@ -47,10 +42,4 @@ class ConnectivityManagerHelper @Inject constructor(
             networkCallback
         )
     }
-
-    fun unregisterCallback() {
-        connectivityManager.unregisterNetworkCallback(networkCallback)
-    }
 }
-
-data class ConnectivityState(var value: Boolean? = null)

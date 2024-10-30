@@ -22,7 +22,7 @@ fun ErrorDialog(
     modifier: Modifier = Modifier,
     message: String,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit = {}
 ) {
     AlertDialog(
         modifier = modifier,

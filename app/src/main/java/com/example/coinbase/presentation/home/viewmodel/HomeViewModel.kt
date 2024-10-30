@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
+import com.example.coinbase.presentation.home.HomeEvent
 import com.example.coinbase.utils.AppConstants
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,58 +20,47 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val coinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
+    private var coins: List<CoinModel> = listOf()
 
-    private val _uiState = MutableStateFlow(HomeUiState())
+    private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
         .onStart { getCoins() }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(AppConstants.STOP_TIMEOUT_MILLIS),
-            initialValue = HomeUiState()
+            initialValue = HomeUiState.Loading
         )
 
-    private var coins: List<CoinModel> = listOf()
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.SearchCoinByName -> onSearchCoinByName(event.name)
+            HomeEvent.LoadCoins -> getCoins()
+        }
+    }
 
-    fun getCoins() {
+    private fun getCoins() {
+        HomeUiState.Loading.updateUiState()
         viewModelScope.launchSuspendFun(
             blockToRun = { coinsUseCase() },
-            onLoading = { loading ->
-                _uiState.update { uiState ->
-                    uiState.copy(loading = loading)
-                }
-            },
             onSuccess = { response ->
-                _uiState.update {
-                    it.copy(list = response)
-                }
+                HomeUiState.ListCoins(response).updateUiState()
                 coins = response
             },
             onError = { error ->
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        errorMessage = error.message.orEmpty(),
-                        showError = true
-                    )
-                }
+                HomeUiState.Error(error.message.orEmpty()).updateUiState()
             }
         )
     }
 
-    fun onSearchCoinByName(text: String) {
+    private fun onSearchCoinByName(text: String) {
         val coinsFiltered = coins.filter {
             it.name.lowercase().contains(text.lowercase())
         }
-        _uiState.update {
-            it.copy(
-                list = coinsFiltered,
-                searchInputText = text
-            )
-        }
+        HomeUiState.ListCoins(
+            list = coinsFiltered,
+            searchText = text
+        ).updateUiState()
     }
 
-    fun dismissErrorDialog() {
-        _uiState.update { currentState ->
-            currentState.copy(showError = false)
-        }
-    }
+    private fun HomeUiState.updateUiState() = _uiState.update { this }
 }

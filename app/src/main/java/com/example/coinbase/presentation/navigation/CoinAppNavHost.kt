@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.coinbase.presentation.detail.CoinDetailWebView
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
-import com.example.coinbase.presentation.home.HomeScreen
+import com.example.coinbase.presentation.home.HomeRoute
 
 @Composable
 fun CoinAppNavHost(
@@ -20,17 +20,17 @@ fun CoinAppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Home
+        startDestination = HomeRoute
     ) {
-        composable<Home> {
-            HomeScreen(
+        composable<HomeRoute> {
+            HomeRoute(
                 onClickCardItem = { coinModel ->
-                    navController.navigate(Detail(coinModel))
+                    navController.navigate(DetailRoute(coinModel))
                 }
             )
         }
-        composable<Detail>(typeMap = Detail.typeMap) { backStackEntry ->
-            val detailRoute = backStackEntry.toRoute<Detail>()
+        composable<DetailRoute>(typeMap = DetailRoute.typeMap) { backStackEntry ->
+            val detailRoute = backStackEntry.toRoute<DetailRoute>()
             val viewModel: WebSiteViewModel = hiltViewModel(
                 creationCallback = { factory: WebSiteViewModel.MyViewModelFactory ->
                     factory.create(detailRoute.model)

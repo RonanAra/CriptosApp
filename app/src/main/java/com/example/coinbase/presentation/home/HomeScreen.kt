@@ -18,41 +18,66 @@ import com.example.coinbase.presentation.common.ErrorDialog
 import com.example.coinbase.presentation.common.LoadingTemplate
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
+import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
 
 @Composable
-fun HomeScreen(
+fun HomeRoute(
     onClickCardItem: (CoinModel) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.loading) LoadingTemplate()
+    HomeScreen(
+        uiState = uiState,
+        onEvent = viewModel::onEvent,
+        onClickCardItem = onClickCardItem
+    )
+}
 
-    if (uiState.showError) {
-        ErrorDialog(
-            message = uiState.errorMessage,
-            onDismiss = viewModel::dismissErrorDialog,
-            onConfirm = {
-                viewModel.run {
-                    getCoins()
-                    dismissErrorDialog()
-                }
-            }
-        )
+@Composable
+fun HomeScreen(
+    uiState: HomeUiState,
+    onEvent: (HomeEvent) -> Unit,
+    onClickCardItem: (CoinModel) -> Unit
+) {
+    when (uiState) {
+        is HomeUiState.Loading -> LoadingTemplate()
+        is HomeUiState.Error -> {
+            ErrorDialog(
+                message = uiState.message,
+                onConfirm = { onEvent(HomeEvent.LoadCoins) }
+            )
+        }
+        is HomeUiState.ListCoins -> {
+            ListCoins(
+                coins = uiState.list,
+                searchText = uiState.searchText,
+                onClickCardItem = onClickCardItem,
+                onSearchCoinByName = { onEvent(HomeEvent.SearchCoinByName(it)) }
+            )
+        }
     }
+}
 
+@Composable
+fun ListCoins(
+    coins: List<CoinModel>,
+    searchText: String,
+    onClickCardItem: (CoinModel) -> Unit,
+    onSearchCoinByName: (String) -> Unit
+) {
     Column(Modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.assets_title),
             modifier = Modifier.padding(16.dp)
         )
         SearchTextInput(
-            searchText = uiState.searchInputText,
-            onValueChange = viewModel::onSearchCoinByName
+            searchText = searchText,
+            onValueChange = { text -> onSearchCoinByName(text) }
         )
         ListCoins(
-            listCoins = uiState.list,
+            listCoins = coins,
             onClickItem = onClickCardItem
         )
     }
@@ -62,6 +87,8 @@ fun HomeScreen(
 @Composable
 private fun Preview() {
     HomeScreen(
+        uiState = HomeUiState.ListCoins(listOf()),
+        onEvent = {},
         onClickCardItem = {}
     )
 }

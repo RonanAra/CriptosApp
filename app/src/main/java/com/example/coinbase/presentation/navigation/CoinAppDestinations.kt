@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
 @Serializable
-object Home
+object HomeRoute
 
 @Serializable
-data class Detail(
+data class DetailRoute(
     val model: CoinModel
 ) {
     companion object {

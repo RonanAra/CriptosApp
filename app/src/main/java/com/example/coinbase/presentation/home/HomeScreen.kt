@@ -3,6 +3,7 @@ package com.example.coinbase.presentation.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,6 +21,7 @@ import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
+import com.example.coinbase.utils.AppConstants
 
 @Composable
 fun HomeRoute(
@@ -41,45 +43,45 @@ fun HomeScreen(
     onEvent: (HomeEvent) -> Unit,
     onClickCardItem: (CoinModel) -> Unit
 ) {
-    when (uiState) {
-        is HomeUiState.Loading -> LoadingTemplate()
-        is HomeUiState.Error -> {
-            ErrorDialog(
-                message = uiState.message,
-                onConfirm = { onEvent(HomeEvent.LoadCoins) }
-            )
-        }
-        is HomeUiState.ListCoins -> {
-            ListCoins(
-                coins = uiState.list,
-                searchText = uiState.searchText,
-                onClickCardItem = onClickCardItem,
-                onSearchCoinByName = { onEvent(HomeEvent.SearchCoinByName(it)) }
-            )
-        }
+    val searchText = when (uiState) {
+        is HomeUiState.ListCoins -> uiState.searchText
+        else -> AppConstants.EMPTY_STRING
     }
-}
 
-@Composable
-fun ListCoins(
-    coins: List<CoinModel>,
-    searchText: String,
-    onClickCardItem: (CoinModel) -> Unit,
-    onSearchCoinByName: (String) -> Unit
-) {
-    Column(Modifier.fillMaxSize()) {
-        Text(
-            text = stringResource(R.string.assets_title),
-            modifier = Modifier.padding(16.dp)
-        )
-        SearchTextInput(
-            searchText = searchText,
-            onValueChange = { text -> onSearchCoinByName(text) }
-        )
-        ListCoins(
-            listCoins = coins,
-            onClickItem = onClickCardItem
-        )
+    Scaffold(
+        topBar = {
+            Text(
+                text = stringResource(R.string.assets_title),
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            SearchTextInput(
+                searchText = searchText,
+                onValueChange = { onEvent(HomeEvent.SearchCoinByName(it)) }
+            )
+            when (uiState) {
+                is HomeUiState.Loading -> LoadingTemplate()
+                is HomeUiState.Error -> {
+                    ErrorDialog(
+                        message = uiState.message,
+                        onConfirm = { onEvent(HomeEvent.LoadCoins) }
+                    )
+                }
+
+                is HomeUiState.ListCoins -> {
+                    ListCoins(
+                        listCoins = uiState.list,
+                        onClickItem = onClickCardItem,
+                    )
+                }
+            }
+        }
     }
 }
 

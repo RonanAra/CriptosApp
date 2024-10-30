@@ -1,5 +1,6 @@
 package com.example.coinbase.presentation.home.components
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,7 +19,9 @@ fun ListCoins(
     if (listCoins.isEmpty()) EmptyPlaceHolder()
     else LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = modifier.padding(top = 4.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 4.dp)
     ) {
         items(listCoins) { item ->
             CoinCardItem(

@@ -1,5 +1,6 @@
 package com.example.coinbase.presentation.home
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -8,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,6 +24,7 @@ import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
+import com.example.coinbase.utils.clearFocusOnKeyboardDismiss
 
 @Composable
 fun HomeRoute(
@@ -44,6 +48,10 @@ fun HomeScreen(
     onEvent: (HomeEvent) -> Unit,
     onClickCardItem: (CoinModel) -> Unit
 ) {
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity ?: error("Activity is required")
+    val focusManager = LocalFocusManager.current
+
     Scaffold(
         topBar = {
             Text(
@@ -58,6 +66,11 @@ fun HomeScreen(
                 .padding(paddingValues)
         ) {
             SearchTextInput(
+                modifier = Modifier
+                    .clearFocusOnKeyboardDismiss(
+                        activity = activity,
+                        focusManager = focusManager
+                    ),
                 searchText = searchText,
                 onValueChange = { onEvent(HomeEvent.SearchCoinByName(it)) }
             )

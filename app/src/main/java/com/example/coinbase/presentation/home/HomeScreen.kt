@@ -21,7 +21,6 @@ import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
-import com.example.coinbase.utils.AppConstants
 
 @Composable
 fun HomeRoute(
@@ -32,6 +31,7 @@ fun HomeRoute(
 
     HomeScreen(
         uiState = uiState,
+        searchText = viewModel.searchText,
         onEvent = viewModel::onEvent,
         onClickCardItem = onClickCardItem
     )
@@ -40,14 +40,10 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
+    searchText: String,
     onEvent: (HomeEvent) -> Unit,
     onClickCardItem: (CoinModel) -> Unit
 ) {
-    val searchText = when (uiState) {
-        is HomeUiState.ListCoins -> uiState.searchText
-        else -> AppConstants.EMPTY_STRING
-    }
-
     Scaffold(
         topBar = {
             Text(
@@ -90,6 +86,7 @@ fun HomeScreen(
 private fun Preview() {
     HomeScreen(
         uiState = HomeUiState.ListCoins(listOf()),
+        searchText = "",
         onEvent = {},
         onClickCardItem = {}
     )

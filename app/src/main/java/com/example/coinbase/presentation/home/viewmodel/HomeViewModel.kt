@@ -1,11 +1,15 @@
 package com.example.coinbase.presentation.home.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.presentation.home.HomeEvent
-import com.example.coinbase.utils.AppConstants
+import com.example.coinbase.utils.AppConstants.EMPTY_STRING
+import com.example.coinbase.utils.AppConstants.STOP_TIMEOUT_MILLIS
 import com.example.coinbase.utils.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,13 +25,14 @@ class HomeViewModel @Inject constructor(
     private val coinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
     private var coins: List<CoinModel> = listOf()
+    var searchText by mutableStateOf(EMPTY_STRING)
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
         .onStart { getCoins() }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(AppConstants.STOP_TIMEOUT_MILLIS),
+            started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS),
             initialValue = HomeUiState.Loading
         )
 
@@ -39,7 +44,6 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getCoins() {
-        HomeUiState.Loading.updateUiState()
         viewModelScope.launchSuspendFun(
             blockToRun = { coinsUseCase() },
             onSuccess = { response ->
@@ -56,10 +60,12 @@ class HomeViewModel @Inject constructor(
         val coinsFiltered = coins.filter {
             it.name.lowercase().contains(text.lowercase())
         }
-        HomeUiState.ListCoins(
-            list = coinsFiltered,
-            searchText = text
-        ).updateUiState()
+        onSearchTextChange(text)
+        HomeUiState.ListCoins(coinsFiltered).updateUiState()
+    }
+
+    private fun onSearchTextChange(newText: String) {
+        searchText = newText
     }
 
     private fun HomeUiState.updateUiState() = _uiState.update { this }

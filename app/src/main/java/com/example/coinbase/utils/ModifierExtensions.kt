@@ -1,8 +1,8 @@
 package com.example.coinbase.utils
 
+import android.app.Activity
 import android.graphics.Rect
 import android.view.ViewTreeObserver
-import androidx.activity.ComponentActivity
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +13,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusManager
 
 fun Modifier.clearFocusOnKeyboardDismiss(
-    activity: ComponentActivity,
+    activity: Activity,
     focusManager: FocusManager
 ): Modifier = composed {
     var isKeyboardOpen by remember { mutableStateOf(false) }

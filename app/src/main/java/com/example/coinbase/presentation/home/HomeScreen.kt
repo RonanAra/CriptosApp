@@ -1,6 +1,6 @@
 package com.example.coinbase.presentation.home
 
-import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,8 +47,7 @@ fun HomeScreen(
     onEvent: (HomeEvent) -> Unit,
     onClickCardItem: (CoinModel) -> Unit
 ) {
-    val context = LocalContext.current
-    val activity = context as? ComponentActivity ?: error("Activity is required")
+    val activity = LocalActivity.current ?: error("Activity is required")
     val focusManager = LocalFocusManager.current
 
     Scaffold(

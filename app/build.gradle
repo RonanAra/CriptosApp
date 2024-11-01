@@ -13,14 +13,14 @@ def keystoreProperties = new Properties()
 keystorePropertiesFile.withInputStream {keystoreProperties.load(it) }
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     namespace("com.example.coinbase")
 
     defaultConfig {
         applicationId "com.example.coinbase"
         minSdk 24
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -79,7 +79,7 @@ dependencies {
     implementation 'androidx.compose.material:material-icons-core'
     implementation 'androidx.compose.material:material-icons-extended'
     implementation 'androidx.compose.material3:material3-window-size-class'
-    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.activity:activity-compose:1.10.0-alpha03'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation 'androidx.hilt:hilt-navigation-compose:1.1.0'

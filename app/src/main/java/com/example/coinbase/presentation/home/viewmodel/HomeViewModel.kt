@@ -26,6 +26,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private var coins: List<CoinModel> = listOf()
     var searchText by mutableStateOf(EMPTY_STRING)
+        private set
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState

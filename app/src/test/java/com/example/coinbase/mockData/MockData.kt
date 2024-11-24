@@ -29,5 +29,5 @@ object MockData {
         )
     )
 
-    val errorException = RetrofitException("Error get coins", null)
+    val errorException = RetrofitException("Erro Desconhecido", null)
 }

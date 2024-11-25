@@ -1,9 +1,8 @@
-package com.example.coinbase.utils
+package com.example.coinbase.utils.extensions
 
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.example.coinbase.domain.entity.CoinModel
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

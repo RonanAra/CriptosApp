@@ -23,7 +23,7 @@ import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
-import com.example.coinbase.utils.clearFocusOnKeyboardDismiss
+import com.example.coinbase.utils.extensions.clearFocusOnKeyboardDismiss
 
 @Composable
 fun HomeRoute(

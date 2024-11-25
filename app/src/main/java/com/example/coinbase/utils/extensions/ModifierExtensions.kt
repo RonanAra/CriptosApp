@@ -1,4 +1,4 @@
-package com.example.coinbase.utils
+package com.example.coinbase.utils.extensions
 
 import android.app.Activity
 import android.graphics.Rect

@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.coinbase.BuildConfig
 import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
 import com.example.coinbase.data.intercptor.NetworkStatusInterceptor
-import com.example.coinbase.data.service.CoinService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -81,12 +80,10 @@ object NetworkModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: GsonConverterFactory,
-    ): CoinService {
+    ): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl("https://api.coinbase.com/v2/")
             .client(okHttpClient)
             .addConverterFactory(converterFactory)
-            .build()
-            .create(CoinService::class.java)
     }
 }

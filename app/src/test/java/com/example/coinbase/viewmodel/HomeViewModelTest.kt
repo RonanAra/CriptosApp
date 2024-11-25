@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.example.coinbase.dispatcher.MainDispatcherRule
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.mockData.MockData
-import com.example.coinbase.presentation.home.HomeEvent
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
 import io.mockk.coEvery
@@ -57,8 +56,6 @@ class HomeViewModelTest {
     fun `test state error when fetching coins list`() = runTest {
         val errorMessage = MockData.errorException.message.orEmpty()
         coEvery { getCoinsUseCase() } throws Exception(errorMessage)
-
-        homeViewModel.onEvent(HomeEvent.LoadCoins)
 
         homeViewModel.uiState.test {
             assertEquals(

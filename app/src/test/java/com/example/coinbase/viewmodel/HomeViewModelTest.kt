@@ -54,12 +54,11 @@ class HomeViewModelTest {
 
     @Test
     fun `test state error when fetching coins list`() = runTest {
-        val errorMessage = MockData.errorException.message.orEmpty()
-        coEvery { getCoinsUseCase() } throws Exception(errorMessage)
+        coEvery { getCoinsUseCase() } throws MockData.errorException
 
         homeViewModel.uiState.test {
             assertEquals(
-                HomeUiState.Error(errorMessage),
+                HomeUiState.Error(MockData.errorException.message.orEmpty()),
                 awaitItem()
             )
         }

@@ -1,7 +1,6 @@
 package com.example.coinbase.mockData
 
 import com.example.coinbase.domain.entity.CoinModel
-import com.example.coinbase.utils.RetrofitException
 
 object MockData {
     val coins = listOf(
@@ -29,5 +28,5 @@ object MockData {
         )
     )
 
-    val errorException = RetrofitException("Erro Desconhecido", null)
+    val errorException = Exception("Erro Desconhecido")
 }

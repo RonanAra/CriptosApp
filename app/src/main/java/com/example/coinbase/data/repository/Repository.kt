@@ -1,7 +1,8 @@
 package com.example.coinbase.data.repository
 
-import com.example.coinbase.data.models.response.CoinResponse
+import com.example.coinbase.data.mapper.toDomain
 import com.example.coinbase.data.service.CoinService
+import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.repository.HomeRepository
 import com.example.coinbase.utils.service
 import retrofit2.Retrofit
@@ -12,7 +13,7 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
     private val service by service<CoinService>(retrofit)
 
-    override suspend fun getCoins(): List<CoinResponse> {
-        return service.getCoinsList().data
+    override suspend fun getCoins(): List<CoinModel> {
+        return service.getCoinsList().toDomain()
     }
 }

@@ -3,7 +3,7 @@ package com.example.coinbase.di
 import android.content.Context
 import com.example.coinbase.BuildConfig
 import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
-import com.example.coinbase.data.intercptor.NetworkStatusInterceptor
+import com.example.coinbase.data.network.intercptor.NetworkStatusInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

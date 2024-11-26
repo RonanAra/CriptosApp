@@ -1,4 +1,4 @@
-package com.example.coinbase.data.intercptor
+package com.example.coinbase.data.network.intercptor
 
 import okio.IOException
 

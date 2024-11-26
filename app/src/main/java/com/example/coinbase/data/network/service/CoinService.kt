@@ -1,4 +1,4 @@
-package com.example.coinbase.data.service
+package com.example.coinbase.data.network.service
 
 import com.example.coinbase.data.models.response.ListCoinsResponse
 import retrofit2.http.*

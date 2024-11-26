@@ -1,7 +1,7 @@
 package com.example.coinbase.data.repository
 
 import com.example.coinbase.data.mapper.toDomain
-import com.example.coinbase.data.service.CoinService
+import com.example.coinbase.data.network.service.CoinService
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.repository.HomeRepository
 import com.example.coinbase.utils.service

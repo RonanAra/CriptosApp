@@ -1,4 +1,4 @@
-package com.example.coinbase.data.intercptor
+package com.example.coinbase.data.network.intercptor
 
 import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
 import okhttp3.Interceptor

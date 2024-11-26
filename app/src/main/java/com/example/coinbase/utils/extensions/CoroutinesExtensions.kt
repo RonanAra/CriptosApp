@@ -1,5 +1,6 @@
-package com.example.coinbase.utils
+package com.example.coinbase.utils.extensions
 
+import com.example.coinbase.utils.exceptions.RetrofitException
 import com.google.gson.JsonParseException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

@@ -10,7 +10,7 @@ import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.presentation.home.HomeEvent
 import com.example.coinbase.utils.AppConstants.EMPTY_STRING
 import com.example.coinbase.utils.AppConstants.STOP_TIMEOUT_MILLIS
-import com.example.coinbase.utils.launchSuspendFun
+import com.example.coinbase.utils.extensions.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,4 +1,4 @@
-package com.example.coinbase.utils
+package com.example.coinbase.utils.exceptions
 
 class RetrofitException(
     message: String?,

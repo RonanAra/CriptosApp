@@ -10,7 +10,7 @@ interface HomeDataSource {
     suspend fun getCoins(): ListCoinsResponse
 }
 
-class HomeDataSourceImpl @Inject constructor(
+class HomeDataSourceRemoteImpl @Inject constructor(
     retrofit: Retrofit.Builder
 ) : HomeDataSource {
     private val service by service<CoinService>(retrofit)

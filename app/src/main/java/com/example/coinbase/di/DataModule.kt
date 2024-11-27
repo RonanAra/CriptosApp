@@ -1,8 +1,8 @@
 package com.example.coinbase.di
 
 import com.example.coinbase.data.datasource.HomeDataSource
-import com.example.coinbase.data.datasource.HomeDataSourceImpl
-import com.example.coinbase.data.repository.HomeRepositoryImpl
+import com.example.coinbase.data.datasource.HomeDataSourceRemoteImpl
+import com.example.coinbase.data.repository.HomeRepositoryRemoteImpl
 import com.example.coinbase.domain.repository.HomeRepository
 import dagger.Binds
 import dagger.Module
@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 interface DataModule {
 
     @Binds
-    fun bindHomeRepository(impl: HomeRepositoryImpl): HomeRepository
+    fun bindHomeRepository(impl: HomeRepositoryRemoteImpl): HomeRepository
 
     @Binds
-    fun bindHomeDataSource(impl: HomeDataSourceImpl): HomeDataSource
+    fun bindHomeDataSource(impl: HomeDataSourceRemoteImpl): HomeDataSource
 }

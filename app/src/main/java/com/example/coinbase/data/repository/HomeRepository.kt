@@ -6,7 +6,7 @@ import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.repository.HomeRepository
 import javax.inject.Inject
 
-class HomeRepositoryImpl @Inject constructor(
+class HomeRepositoryRemoteImpl @Inject constructor(
     private val dataSource: HomeDataSource
 ) : HomeRepository {
     override suspend fun getCoins(): List<CoinModel> {

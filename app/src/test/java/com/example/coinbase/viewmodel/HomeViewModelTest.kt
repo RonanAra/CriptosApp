@@ -44,7 +44,7 @@ class HomeViewModelTest {
 
         homeViewModel.uiState.test {
             assertEquals(
-                HomeUiState.ListCoins(coinsMock),
+                HomeUiState.FetchCoins(coinsMock),
                 awaitItem()
             )
         }

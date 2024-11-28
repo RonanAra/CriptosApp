@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -32,11 +33,18 @@ fun HomeRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is HomeUiEvent.NavigationToWebSite -> onClickCardItem(event.item)
+            }
+        }
+    }
+
     HomeScreen(
         uiState = uiState,
         searchText = viewModel.searchText,
-        onEvent = viewModel::onEvent,
-        onClickCardItem = onClickCardItem
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -44,8 +52,7 @@ fun HomeRoute(
 fun HomeScreen(
     uiState: HomeUiState,
     searchText: String,
-    onEvent: (HomeEvent) -> Unit,
-    onClickCardItem: (CoinModel) -> Unit
+    onEvent: (HomeEvent) -> Unit
 ) {
     val activity = LocalActivity.current ?: error("Activity is required")
     val focusManager = LocalFocusManager.current
@@ -81,10 +88,12 @@ fun HomeScreen(
                     )
                 }
 
-                is HomeUiState.ListCoins -> {
+                is HomeUiState.FetchCoins -> {
                     ListCoins(
                         listCoins = uiState.list,
-                        onClickItem = onClickCardItem,
+                        onClickItem = { item ->
+                            onEvent(HomeEvent.OnClickCardItem(item))
+                        },
                     )
                 }
             }
@@ -96,9 +105,8 @@ fun HomeScreen(
 @Composable
 private fun Preview() {
     HomeScreen(
-        uiState = HomeUiState.ListCoins(listOf()),
+        uiState = HomeUiState.FetchCoins(listOf()),
         searchText = "",
-        onEvent = {},
-        onClickCardItem = {}
+        onEvent = {}
     )
 }

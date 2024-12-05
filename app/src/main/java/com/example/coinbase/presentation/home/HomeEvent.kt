@@ -8,6 +8,6 @@ sealed interface HomeEvent {
     data object LoadCoins : HomeEvent
 }
 
-sealed interface HomeNavigationEvent {
-    data class NavigationToWebSite(val item: CoinModel) : HomeNavigationEvent
+sealed interface HomeUiEvent {
+    data class UiToWebSite(val item: CoinModel) : HomeUiEvent
 }

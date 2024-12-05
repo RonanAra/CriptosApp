@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.presentation.home.HomeEvent
-import com.example.coinbase.presentation.home.HomeNavigationEvent
+import com.example.coinbase.presentation.home.HomeUiEvent
 import com.example.coinbase.utils.AppConstants.EMPTY_STRING
 import com.example.coinbase.utils.AppConstants.STOP_TIMEOUT_MILLIS
 import com.example.coinbase.utils.extensions.launchSuspendFun
@@ -33,8 +33,8 @@ class HomeViewModel @Inject constructor(
     var searchText by mutableStateOf(EMPTY_STRING)
         private set
 
-    private val _navigationEvent = MutableSharedFlow<HomeNavigationEvent>()
-    val navigationEvent: SharedFlow<HomeNavigationEvent> = _navigationEvent.asSharedFlow()
+    private val _uiEvent = MutableSharedFlow<HomeUiEvent>()
+    val uiEvent: SharedFlow<HomeUiEvent> = _uiEvent.asSharedFlow()
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
 
     private fun navigateToCoinWebsite(item: CoinModel) {
         viewModelScope.launch {
-            _navigationEvent.emit(HomeNavigationEvent.NavigationToWebSite(item))
+            _uiEvent.emit(HomeUiEvent.UiToWebSite(item))
         }
     }
 

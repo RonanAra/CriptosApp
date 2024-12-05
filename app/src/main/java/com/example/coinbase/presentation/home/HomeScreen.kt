@@ -34,9 +34,9 @@ fun HomeRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(viewModel) {
-        viewModel.navigationEvent.collect { event ->
+        viewModel.uiEvent.collect { event ->
             when (event) {
-                is HomeNavigationEvent.NavigationToWebSite -> onClickCardItem(event.item)
+                is HomeUiEvent.UiToWebSite -> onClickCardItem(event.item)
             }
         }
     }

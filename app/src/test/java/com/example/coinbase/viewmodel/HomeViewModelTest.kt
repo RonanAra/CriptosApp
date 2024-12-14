@@ -4,8 +4,10 @@ import app.cash.turbine.test
 import com.example.coinbase.dispatcher.MainDispatcherRule
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.mockData.MockData
+import com.example.coinbase.presentation.home.HomeEvent
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
+import com.example.coinbase.utils.exceptions.RetrofitException
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -65,4 +67,14 @@ class HomeViewModelTest {
 
         coVerify { getCoinsUseCase() }
     }
+
+    @Test(expected = RetrofitException::class)
+    fun `should throw an exception when the calling load coins event returns an exception`() =
+        runTest {
+            coEvery { getCoinsUseCase() } throws RetrofitException("", null)
+
+            homeViewModel.onEvent(HomeEvent.LoadCoins)
+
+            coVerify { getCoinsUseCase() }
+        }
 }

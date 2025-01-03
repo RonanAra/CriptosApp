@@ -13,13 +13,13 @@ import com.example.coinbase.utils.AppConstants.EMPTY_STRING
 import com.example.coinbase.utils.AppConstants.STOP_TIMEOUT_MILLIS
 import com.example.coinbase.utils.extensions.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -33,8 +33,8 @@ class HomeViewModel @Inject constructor(
     var searchText by mutableStateOf(EMPTY_STRING)
         private set
 
-    private val _uiEvent = MutableSharedFlow<HomeUiEvent>()
-    val uiEvent: SharedFlow<HomeUiEvent> = _uiEvent.asSharedFlow()
+    private val eventChannel = Channel<HomeUiEvent>(Channel.BUFFERED)
+    val events: Flow<HomeUiEvent> = eventChannel.receiveAsFlow()
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
 
     private fun navigateToCoinWebsite(item: CoinModel) {
         viewModelScope.launch {
-            _uiEvent.emit(HomeUiEvent.UiToWebSite(item))
+            eventChannel.send(HomeUiEvent.UiToWebSite(item))
         }
     }
 

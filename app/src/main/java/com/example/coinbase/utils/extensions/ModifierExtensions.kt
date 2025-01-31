@@ -17,7 +17,6 @@ fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
     val view = LocalView.current
     val focusManager = LocalFocusManager.current
     DisposableEffect(view) {
-
         val listener = ViewTreeObserver.OnGlobalLayoutListener {
             val rect = Rect()
             view.getWindowVisibleDisplayFrame(rect)

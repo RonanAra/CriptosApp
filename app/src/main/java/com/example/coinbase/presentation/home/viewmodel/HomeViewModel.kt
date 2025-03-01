@@ -1,15 +1,11 @@
 package com.example.coinbase.presentation.home.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.presentation.home.HomeEvent
 import com.example.coinbase.presentation.home.HomeUiEvent
-import com.example.coinbase.utils.AppConstants.EMPTY_STRING
 import com.example.coinbase.utils.AppConstants.STOP_TIMEOUT_MILLIS
 import com.example.coinbase.utils.extensions.launchSuspendFun
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,19 +26,17 @@ class HomeViewModel @Inject constructor(
     private val coinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
     private var coins: List<CoinModel> = listOf()
-    var searchText by mutableStateOf(EMPTY_STRING)
-        private set
 
     private val eventChannel = Channel<HomeUiEvent>(Channel.BUFFERED)
     val events: Flow<HomeUiEvent> = eventChannel.receiveAsFlow()
 
-    private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
+    private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState
         .onStart { getCoins() }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS),
-            initialValue = HomeUiState.Loading
+            initialValue = HomeUiState()
         )
 
     fun onEvent(event: HomeEvent) {
@@ -62,12 +56,21 @@ class HomeViewModel @Inject constructor(
     private fun getCoins() {
         viewModelScope.launchSuspendFun(
             blockToRun = { coinsUseCase() },
-            onSuccess = { response ->
-                HomeUiState.FetchCoins(response).updateUiState()
-                coins = response
+            onLoading = { loading ->
+                _uiState.update { state ->
+                    state.copy(isRefreshing = loading)
+                }
+            },
+            onSuccess = { coinModelList ->
+                _uiState.update { state ->
+                    state.copy(coins = coinModelList)
+                }
+                coins = coinModelList
             },
             onError = { error ->
-                HomeUiState.Error(error.message.orEmpty()).updateUiState()
+                _uiState.update { state ->
+                    state.copy(errorMessage = error.message)
+                }
             }
         )
     }
@@ -77,12 +80,14 @@ class HomeViewModel @Inject constructor(
             it.name.lowercase().contains(text.lowercase())
         }
         onSearchTextChange(text)
-        HomeUiState.FetchCoins(coinsFiltered).updateUiState()
+        _uiState.update { state ->
+            state.copy(coins = coinsFiltered)
+        }
     }
 
-    private fun onSearchTextChange(newText: String) {
-        searchText = newText
+    private fun onSearchTextChange(text: String) {
+        _uiState.update { state ->
+            state.copy(searchText = text)
+        }
     }
-
-    private fun HomeUiState.updateUiState() = _uiState.update { this }
 }

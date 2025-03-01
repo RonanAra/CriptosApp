@@ -1,9 +1,11 @@
 package com.example.coinbase.presentation.home.viewmodel
 
 import com.example.coinbase.domain.entity.CoinModel
+import com.example.coinbase.utils.AppConstants
 
-sealed interface HomeUiState {
-    data class FetchCoins(val list: List<CoinModel>) : HomeUiState
-    data class Error(val message: String) : HomeUiState
-    data object Loading : HomeUiState
-}
+data class HomeUiState(
+    val coins: List<CoinModel>? = null,
+    val errorMessage: String? = null,
+    val searchText: String = AppConstants.EMPTY_STRING,
+    val isRefreshing: Boolean = false
+)

@@ -17,7 +17,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.coinbase.R
 import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.presentation.common.ErrorDialog
-import com.example.coinbase.presentation.common.LoadingTemplate
 import com.example.coinbase.presentation.home.components.ListCoins
 import com.example.coinbase.presentation.home.components.SearchTextInput
 import com.example.coinbase.presentation.home.viewmodel.HomeUiState
@@ -41,7 +40,6 @@ fun HomeRoute(
 
     HomeScreen(
         uiState = uiState,
-        searchText = viewModel.searchText,
         onEvent = viewModel::onEvent
     )
 }
@@ -49,7 +47,6 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
-    searchText: String,
     onEvent: (HomeEvent) -> Unit
 ) {
     Scaffold(
@@ -67,27 +64,25 @@ fun HomeScreen(
         ) {
             SearchTextInput(
                 modifier = Modifier.clearFocusOnKeyboardDismiss(),
-                searchText = searchText,
+                searchText = uiState.searchText,
                 onValueChange = { onEvent(HomeEvent.SearchCoinByName(it)) }
             )
-            when (uiState) {
-                is HomeUiState.Loading -> LoadingTemplate()
-                is HomeUiState.Error -> {
-                    ErrorDialog(
-                        message = uiState.message,
-                        onConfirm = { onEvent(HomeEvent.LoadCoins) }
-                    )
-                }
 
-                is HomeUiState.FetchCoins -> {
-                    ListCoins(
-                        listCoins = uiState.list,
-                        onClickItem = { item ->
-                            onEvent(HomeEvent.OnClickCardItem(item))
-                        },
-                    )
-                }
+            uiState.errorMessage?.let { message ->
+                ErrorDialog(
+                    message = message,
+                    onConfirm = { onEvent(HomeEvent.LoadCoins) }
+                )
             }
+
+            ListCoins(
+                listCoins = uiState.coins,
+                isRefreshing = uiState.isRefreshing,
+                onRefresh = { onEvent(HomeEvent.LoadCoins) },
+                onClickItem = { item ->
+                    onEvent(HomeEvent.OnClickCardItem(item))
+                }
+            )
         }
     }
 }
@@ -96,8 +91,7 @@ fun HomeScreen(
 @Composable
 private fun Preview() {
     HomeScreen(
-        uiState = HomeUiState.FetchCoins(listOf()),
-        searchText = "",
+        uiState = HomeUiState(),
         onEvent = {}
     )
 }

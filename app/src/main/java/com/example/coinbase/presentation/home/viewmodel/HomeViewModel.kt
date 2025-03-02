@@ -44,6 +44,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.SearchCoinByName -> onSearchCoinByName(event.name)
             is HomeEvent.OnClickCardItem -> navigateToCoinWebsite(event.item)
             HomeEvent.LoadCoins -> getCoins()
+            HomeEvent.HideErrorDialog -> hideErrorDialog()
         }
     }
 
@@ -88,6 +89,12 @@ class HomeViewModel @Inject constructor(
     private fun onSearchTextChange(text: String) {
         _uiState.update { state ->
             state.copy(searchText = text)
+        }
+    }
+
+    private fun hideErrorDialog() {
+        _uiState.update { state ->
+            state.copy(errorMessage = null)
         }
     }
 }

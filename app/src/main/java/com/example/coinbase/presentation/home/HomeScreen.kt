@@ -71,7 +71,10 @@ fun HomeScreen(
             uiState.errorMessage?.let { message ->
                 ErrorDialog(
                     message = message,
-                    onConfirm = { onEvent(HomeEvent.LoadCoins) }
+                    onConfirm = {
+                        onEvent(HomeEvent.HideErrorDialog)
+                        onEvent(HomeEvent.LoadCoins)
+                    }
                 )
             }
 

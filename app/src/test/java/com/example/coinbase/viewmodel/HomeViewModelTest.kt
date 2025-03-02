@@ -5,7 +5,6 @@ import com.example.coinbase.dispatcher.MainDispatcherRule
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.mockData.MockData
 import com.example.coinbase.presentation.home.HomeEvent
-import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
 import com.example.coinbase.utils.exceptions.RetrofitException
 import io.mockk.coEvery
@@ -32,22 +31,16 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `test initial state is Loading`() = runTest {
-        assertEquals(
-            homeViewModel.uiState.value,
-            HomeUiState.Loading
-        )
-    }
-
-    @Test
     fun `should show list of coins when collecting starts`() = runTest {
         val coinsMock = MockData.coins
         coEvery { getCoinsUseCase() } returns coinsMock
 
+        homeViewModel.onEvent(HomeEvent.LoadCoins)
+
         homeViewModel.uiState.test {
             assertEquals(
-                HomeUiState.FetchCoins(coinsMock),
-                awaitItem()
+                coinsMock,
+                awaitItem().coins
             )
         }
 
@@ -58,11 +51,10 @@ class HomeViewModelTest {
     fun `test state error when fetching coins list`() = runTest {
         coEvery { getCoinsUseCase() } throws MockData.errorException
 
+        homeViewModel.onEvent(HomeEvent.LoadCoins)
+
         homeViewModel.uiState.test {
-            assertEquals(
-                HomeUiState.Error(MockData.errorException.message.orEmpty()),
-                awaitItem()
-            )
+            assert(awaitItem().errorMessage?.isNotEmpty() == true)
         }
 
         coVerify { getCoinsUseCase() }

@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
 
     private fun navigateToCoinWebsite(item: CoinModel) {
         viewModelScope.launch {
-            eventChannel.send(HomeUiEvent.UiToWebSite(item))
+            eventChannel.send(HomeUiEvent.NavigateToCoinWebSite(item))
         }
     }
 

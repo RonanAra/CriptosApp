@@ -10,5 +10,5 @@ sealed interface HomeEvent {
 }
 
 sealed interface HomeUiEvent {
-    data class UiToWebSite(val item: CoinModel) : HomeUiEvent
+    data class NavigateToCoinWebSite(val item: CoinModel) : HomeUiEvent
 }

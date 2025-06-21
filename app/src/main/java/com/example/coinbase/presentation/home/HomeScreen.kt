@@ -33,7 +33,7 @@ fun HomeRoute(
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
             when (event) {
-                is HomeUiEvent.UiToWebSite -> onClickCardItem(event.item)
+                is HomeUiEvent.NavigateToCoinWebSite -> onClickCardItem(event.item)
             }
         }
     }

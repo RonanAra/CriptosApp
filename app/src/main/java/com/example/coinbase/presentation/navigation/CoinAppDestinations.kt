@@ -3,10 +3,11 @@ package com.example.coinbase.presentation.navigation
 import com.example.coinbase.domain.entity.CoinModel
 import kotlinx.serialization.Serializable
 
-@Serializable
-object HomeRoute
+sealed interface CoinAppDestinations {
 
-@Serializable
-data class DetailRoute(
-    val model: CoinModel
-)
+    @Serializable
+    object HomeRoute : CoinAppDestinations
+
+    @Serializable
+    data class DetailRoute(val model: CoinModel) : CoinAppDestinations
+}

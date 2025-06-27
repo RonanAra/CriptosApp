@@ -12,6 +12,8 @@ import com.example.coinbase.domain.entity.CoinModel
 import com.example.coinbase.presentation.detail.CoinDetailWebView
 import com.example.coinbase.presentation.detail.viewmodel.WebSiteViewModel
 import com.example.coinbase.presentation.home.HomeRoute
+import com.example.coinbase.presentation.navigation.CoinAppDestinations.DetailRoute
+import com.example.coinbase.presentation.navigation.CoinAppDestinations.HomeRoute
 import com.example.coinbase.utils.SerializableNavTypeHelper
 
 @Composable

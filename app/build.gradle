@@ -60,6 +60,14 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.13"
     }
+
+    configurations.configureEach {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'androidx.work') {
+                details.useVersion('2.9.1')
+            }
+        }
+    }
 }
 
 dependencies {

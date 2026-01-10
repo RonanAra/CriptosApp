@@ -44,15 +44,31 @@ fun HomeRoute(
         }
     }
 
-    HomeScreen(
-        uiState = uiState,
-        onEvent = viewModel::onEvent
-    )
+    when (val currentState = uiState) {
+        is HomeUiState.Error -> {
+            ErrorDialog(
+                message = currentState.message,
+                onConfirm = {
+                    viewModel.onEvent(HomeEvent.LoadCoins)
+                }
+            )
+        }
+
+        is HomeUiState.Loaded -> {
+            HomeScreen(
+                uiState = currentState,
+                onEvent = viewModel::onEvent
+            )
+        }
+
+        HomeUiState.Loading -> {}
+        HomeUiState.Uninitialized -> viewModel.onEvent(HomeEvent.Initialize)
+    }
 }
 
 @Composable
 fun HomeScreen(
-    uiState: HomeUiState,
+    uiState: HomeUiState.Loaded,
     onEvent: (HomeEvent) -> Unit
 ) {
     Scaffold(
@@ -74,24 +90,12 @@ fun HomeScreen(
                 .padding(paddingValues)
         ) {
             SearchTextInput(
-                modifier = Modifier.clearFocusOnKeyboardDismiss(),
                 searchText = uiState.searchText,
                 onValueChange = { onEvent(HomeEvent.SearchCoinByName(it)) }
             )
 
-            uiState.errorMessage?.let { message ->
-                ErrorDialog(
-                    message = message,
-                    onConfirm = {
-                        onEvent(HomeEvent.HideErrorDialog)
-                        onEvent(HomeEvent.LoadCoins)
-                    }
-                )
-            }
-
             ListCoins(
                 listCoins = uiState.coins,
-                isRefreshing = uiState.isRefreshing,
                 onRefresh = { onEvent(HomeEvent.LoadCoins) },
                 onClickItem = { item ->
                     onEvent(HomeEvent.OnClickCardItem(item))
@@ -110,7 +114,9 @@ fun String.AnnotatedString(): AnnotatedString {
 @Composable
 private fun Preview() {
     HomeScreen(
-        uiState = HomeUiState(),
+        uiState = HomeUiState.Loaded(
+            coins = listOf()
+        ),
         onEvent = {}
     )
 }

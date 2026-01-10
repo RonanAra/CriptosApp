@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListCoins(
-    isRefreshing: Boolean,
+    isRefreshing: Boolean = false,
     onRefresh: () -> Unit,
     listCoins: List<CoinModel>?,
     onClickItem: (CoinModel) -> Unit,

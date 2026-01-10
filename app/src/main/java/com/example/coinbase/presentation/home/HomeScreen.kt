@@ -3,6 +3,7 @@ package com.example.coinbase.presentation.home
 import android.text.Spanned
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -12,8 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,8 +58,13 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             Text(
-                text = stringResource(R.string.assets_title).AnnotatedString(),
-                modifier = Modifier.padding(16.dp)
+                text = stringResource(R.string.assets_title)
+                    .AnnotatedString(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
             )
         }
     ) { paddingValues ->

@@ -5,17 +5,21 @@ import com.example.coinbase.dispatcher.MainDispatcherRule
 import com.example.coinbase.domain.usecase.GetCoinsUseCase
 import com.example.coinbase.mockData.MockData
 import com.example.coinbase.presentation.home.HomeEvent
+import com.example.coinbase.presentation.home.viewmodel.HomeUiState
 import com.example.coinbase.presentation.home.viewmodel.HomeViewModel
 import com.example.coinbase.utils.exceptions.RetrofitException
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
 
     @get:Rule
@@ -31,16 +35,27 @@ class HomeViewModelTest {
     }
 
     @Test
+    fun `should validate initial state`() = runTest {
+        homeViewModel.uiState.test {
+            assertEquals(HomeUiState.Uninitialized, awaitItem())
+        }
+    }
+
+    @Test
     fun `should show list of coins when collecting starts`() = runTest {
         val coinsMock = MockData.coins
         coEvery { getCoinsUseCase() } returns coinsMock
 
-        homeViewModel.onEvent(HomeEvent.LoadCoins)
-
         homeViewModel.uiState.test {
+            skipItems(1)
+
+            homeViewModel.onEvent(HomeEvent.LoadCoins)
+
+            advanceUntilIdle()
+
             assertEquals(
-                coinsMock,
-                awaitItem().coins
+                HomeUiState.Loaded(coinsMock),
+                awaitItem()
             )
         }
 
@@ -54,7 +69,7 @@ class HomeViewModelTest {
         homeViewModel.onEvent(HomeEvent.LoadCoins)
 
         homeViewModel.uiState.test {
-            assert(awaitItem().errorMessage?.isNotEmpty() == true)
+            awaitItem() as HomeUiState.Error
         }
 
         coVerify { getCoinsUseCase() }

@@ -49,5 +49,4 @@ object CoroutinesConstants {
     const val ERROR_UNKNOWN_HOST = "Rede Indisponível"
     const val ERROR_UNKNOWN = "Erro Desconhecido"
     const val TIMEOUT_ERROR = "Tempo Excedido."
-    const val ERROR_PARSE = "JsonParseException"
 }

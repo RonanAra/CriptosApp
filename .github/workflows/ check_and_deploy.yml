@@ -41,20 +41,20 @@ jobs:
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
-        id: sign_app
+        id: coin_app
         with:
           releaseDirectory: app/build/outputs/apk/release
           signingKey: ${{ secrets.SIGNING_KEY }}
           keyAlias: ${{ secrets.KEY_ALIAS }}
           keystorePassword: ${{ secrets.STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildToolsVersion: 33.0.0
+          buildToolsVersion: 35.0.0
 
       - name: Upload signed APK
         uses: actions/upload-artifact@v4
         with:
           name: release.apk
-          path: ${{ steps.sign_app.outputs.signedFile }}
+          path: ${{ steps.coin_app.outputs.signedFile }}
 
       - name: Upload mapping
         uses: actions/upload-artifact@v4

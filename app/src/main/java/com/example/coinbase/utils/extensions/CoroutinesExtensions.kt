@@ -1,7 +1,6 @@
 package com.example.coinbase.utils.extensions
 
 import com.example.coinbase.utils.exceptions.RetrofitException
-import com.google.gson.JsonParseException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -38,7 +37,6 @@ fun Exception.getRetrofitException(): RetrofitException {
                 else -> CoroutinesConstants.ERROR_UNKNOWN
             }
         }
-        is JsonParseException -> "${CoroutinesConstants.ERROR_PARSE} ${this.message}"
         else -> CoroutinesConstants.ERROR_UNKNOWN
     }
     return RetrofitException(

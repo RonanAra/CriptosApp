@@ -1,13 +1,14 @@
 package com.example.coinbase.data.models.response
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CoinResponse(
-    val color: String,
-    val id: String,
-    @SerializedName("image_url")
-    val imageUrl: String,
-    val name: String,
-    val symbol: String,
-    val website: String,
+    @SerialName("color") val color: String,
+    @SerialName("id") val id: String,
+    @SerialName("image_url") val imageUrl: String,
+    @SerialName("name") val name: String,
+    @SerialName("symbol") val symbol: String,
+    @SerialName("website") val website: String,
 )

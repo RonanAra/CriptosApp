@@ -4,16 +4,18 @@ import android.content.Context
 import com.example.coinbase.BuildConfig
 import com.example.coinbase.common.connectivity.ConnectivityManagerHelper
 import com.example.coinbase.data.network.intercptor.NetworkStatusInterceptor
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -54,11 +56,6 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
-    }
-
-    @Provides
     fun provideInterceptors(
         loggingInterceptor: HttpLoggingInterceptor,
         networkStatusInterceptor: NetworkStatusInterceptor
@@ -78,12 +75,16 @@ object NetworkModule {
 
     @Provides
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
-        converterFactory: GsonConverterFactory,
+        okHttpClient: OkHttpClient
     ): Retrofit.Builder {
+        val json = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+            encodeDefaults = true
+        }
         return Retrofit.Builder()
             .baseUrl("https://api.coinbase.com/v2/")
             .client(okHttpClient)
-            .addConverterFactory(converterFactory)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
     }
 }

@@ -1,5 +1,9 @@
 package com.example.coinbase.data.models.response
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ListCoinsResponse(
-    val data: List<CoinResponse>
+    @SerialName("data") val data: List<CoinResponse>
 )

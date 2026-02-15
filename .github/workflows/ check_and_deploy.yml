@@ -36,6 +36,9 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
+      - name: Grant execute permission
+        run: chmod +x ./gradlew
+
       - name: Generate Release APK
         run: ./gradlew assembleRelease
 

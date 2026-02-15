@@ -42,24 +42,22 @@ jobs:
       - name: Grant execute permission
         run: chmod +x ./gradlew
 
-      - name: Generate Release APK
+      - name: Decode keystore
+        run: echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > coin_store.jks
+
+      - name: Build signed APK
+        env:
+          KEYSTORE_FILE: coin_store.jks
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: ./gradlew assembleRelease
 
-      - name: Sign APK
-        id: coin_app
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Upload signed APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: release.apk
-          path: ${{ steps.coin_app.outputs.signedFile }}
+          path: app/build/outputs/apk/release/*.apk
 
       - name: Upload mapping
         uses: actions/upload-artifact@v4

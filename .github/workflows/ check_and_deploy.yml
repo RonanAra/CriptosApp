@@ -51,7 +51,6 @@ jobs:
           keyAlias: ${{ secrets.KEY_ALIAS }}
           keystorePassword: ${{ secrets.STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildToolsVersion: 35.0.0
 
       - name: Upload signed APK
         uses: actions/upload-artifact@v4
